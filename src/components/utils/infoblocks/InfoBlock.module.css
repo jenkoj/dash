@@ -1,0 +1,70 @@
+.block {
+    position: relative;
+   
+    background-color: #ccc;
+    display: block;
+    
+    width: 90px;
+    height: 90px;
+    padding: 10px;
+    margin: 20px;
+    border-radius: 14px;
+    
+    
+    box-sizing: initial;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.02), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
+  }
+
+
+  .header{
+    font-weight: bold;
+    font-size: medium;
+    /* border-style: solid; */
+    text-align: left;
+  }
+
+  .info{
+    position: absolute;
+    font-weight: bold;
+    font-size: small;
+    box-sizing: initial;
+    /* border-style: solid; */
+    top: 60px;
+    opacity: 0.70;
+  }
+
+  .info2{
+    position: absolute;
+    font-weight: bold;
+    font-size: small;
+    box-sizing: initial;
+    opacity: 0.5;
+    /* border-style: solid; */
+    top: 80px;
+    left: 10px;
+  }
+
+  .info3{
+    position: absolute;
+    font-weight: bold;
+    font-size: small;
+    box-sizing: initial;
+    opacity: 0.9;
+    /* border-style: solid; */
+    top: 40px;
+    left: 10px;
+  }
+
+
+
+  .block:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+  
+  .title{
+    font-weight: bold;
+    text-align: left;
+    top: 10px;
+  }
+  
+  
