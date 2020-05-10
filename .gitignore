@@ -4,7 +4,8 @@
 /node_modules
 /.pnp
 .pnp.js
-
+#je že gor
+/database
 # testing
 /coverage
 
