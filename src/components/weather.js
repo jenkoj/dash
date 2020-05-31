@@ -13,7 +13,7 @@ class weather extends Component {
      }
 
     getNapoved = () =>{
-        fetch("http://10.10.40.140:4000/napoved")
+        fetch("http://89.212.216.214:4000/napoved")
         .then(response => response.json())
         .then(response => this.setState({ napoved: response.podatki}))
         .catch(err => console.error(err))
