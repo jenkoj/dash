@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import InfoBlock from "./utils/infoblocks/InfoBlock"
 import styles from "./utils/infoblocks/InfoBlock.module.css"
-import {Container, Row, Col, Button} from 'react-bootstrap';
+import {Container, Row, Col} from 'react-bootstrap';
 
 class weather extends Component {
     state = { 
@@ -19,15 +19,16 @@ class weather extends Component {
         .catch(err => console.error(err))
     }
 
-renderTemp = ({ id, temp}) => <div key={id}>{temp}</div>            // {napoved.map(this.renderTemp)}
-renderPritisk = ({ id, tlak}) => <div key={id}>{tlak}</div>         // {napoved.map(this.renderPritisk)}
-renderVlaga = ({ id, vlaznost}) => <div key={id}>{vlaznost}</div>   // {napoved.map(this.renderVlaga)}
-renderOblac = ({ id, oblacnost}) => <div key={id}>{oblacnost}</div> // {napoved.map(this.renderOblac)}
+    renderTemp = ({ id, temp}) => <div key={id}>{temp}</div>            // {napoved.map(this.renderTemp)}
+    renderPritisk = ({ id, tlak}) => <div key={id}>{tlak}</div>         // {napoved.map(this.renderPritisk)}
+    renderVlaga = ({ id, vlaznost}) => <div key={id}>{vlaznost}</div>   // {napoved.map(this.renderVlaga)}
+    renderOblac = ({ id, oblacnost}) => <div key={id}>{oblacnost}</div> // {napoved.map(this.renderOblac)}
 
 
     render() { 
         const {napoved} = this.state;
-        return (  <div>
+        return (  
+        <div>
             <Container fluid>
             <h1 className={styles.title}>Trenutno stanje</h1>
             <Row noGutters="true">

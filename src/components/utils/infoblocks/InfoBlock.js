@@ -10,15 +10,15 @@ export default function InfoBlock(props) {
                 </h1>
             </div>
             <div>
-                <p className={styles.info3}>
+                <div className={styles.info3}>
                    {props.info3}
-                </p>  
-                <p className={styles.info}>
+                </div>  
+                <div className={styles.info}>
                    {props.info}
-                </p> 
-                <p className={styles.info2}>
+                </div> 
+                <div className={styles.info2}>
                    {props.info2}
-                </p> 
+                </div> 
                             
             </div>
         </div> 

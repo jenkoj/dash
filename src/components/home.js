@@ -1,7 +1,7 @@
 import React from 'react';
 import LightSwitch from "./utils/buttons/LightSwitch";
 import styles from "./utils/infoblocks/InfoBlock.module.css";
-import {Container, Row, Col, Button} from 'react-bootstrap';
+import {Container, Row, Col} from 'react-bootstrap';
 
 export default function Home() {
     return (

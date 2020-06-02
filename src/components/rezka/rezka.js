@@ -1,6 +1,6 @@
 import React from 'react'
 import InfoBlock from "../utils/infoblocks/InfoBlock"
-import {Container, Row, Col, Button} from 'react-bootstrap';
+import {Container, Row, Col} from 'react-bootstrap';
 
 
 export default function Rezka() {
