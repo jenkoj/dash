@@ -1,5 +1,5 @@
 import React from 'react'
-import InfoBlock from "../utils/infoblocks/InfoBlock"
+import InfoBlock from "./utils/infoblocks/InfoBlock"
 import {Container, Row, Col} from 'react-bootstrap';
 
 
