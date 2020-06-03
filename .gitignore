@@ -5,7 +5,7 @@
 /.pnp
 .pnp.js
 #je že gor
-/database
+/database/debug
 # testing
 /coverage
 

@@ -9,7 +9,7 @@ export default function InfoBlock(props) {
                     {props.heading}
                 </h1>
             </div>
-            <div>
+             <div>
                 <div className={styles.info3}>
                    {props.info3}
                 </div>  
