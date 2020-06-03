@@ -1,9 +1,10 @@
+//vnesem vse knjižnice ter css datoteko
 import React from 'react';
 import "./navigationBar.css"
 import {Navbar, Nav} from 'react-bootstrap';
 import {Link} from "react-router-dom"
 
-
+// v spodnji funkciji uporabim boostrap knjižnico za navigacijski zavihek
 export default function navigationBar() {
   return (
     <div>

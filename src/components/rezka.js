@@ -1,11 +1,12 @@
 import React from 'react'
+//vključim info block, tukaj se izkaže prednost reacta saj lahko komponento večkrat uporabim
 import InfoBlock from "./utils/infoblocks/InfoBlock"
+//vključim bootstrap
 import {Container, Row, Col} from 'react-bootstrap';
 
-
+//infoBlock mi omogoča, da passam ime in informacijo skozi 
 export default function Rezka() {
     return (
-       
         <div >
            <Container>
                 <Row>
@@ -16,6 +17,5 @@ export default function Rezka() {
                 </Row>
             </Container>
         </div>
-        
     )
 }

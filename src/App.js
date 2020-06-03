@@ -1,9 +1,12 @@
+//vključim knjižnice
 import React from 'react'
 import {Route} from "react-router-dom"
+//vključim relativne poti za 3 strani
 import Home from "./components/home"
 import Rezka from "./components/rezka"
 import Weather from "./components/weather"
 
+// uvozim navigavijo, kjer je home root stran
 import NavigationBar from "./components/utils/navbars/navigationBar"
 
 function App() {

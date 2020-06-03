@@ -35,23 +35,17 @@
   }
   
   input:checked + .slider {
-    /*background-color: #2296F3;*/
     background-color: #d4ac27;
     transform: scaleX(1.12);
     transform: scaleY(1.06);
-    
-    
   }
-  
   
   
   input:checked + .slider:before {
-    
     transform: translateY(-55px);
-    
   }
   
-  /* Rounded sliders */
+  
   .slider.round {
     border-radius: 14px;
   }
@@ -76,12 +70,10 @@
   }
 
   .header{
-    
     position: absolute;
     left: 50px;
     top: 10px;
     font-weight: bold;
     font-size: medium;
-    /* border-style: solid;  */
     text-align: left;
   }
