@@ -13,7 +13,7 @@ class weather extends Component {
         napoved: []
      }
 
-    //počakam da se komponenta "ustali" in potem naredim api request
+    //počakam da se class mounta in potem naredim api request
     //to je good practice
      componentDidMount(){
          this.getNapoved();
@@ -32,6 +32,7 @@ class weather extends Component {
 
     //definiram metode oziroma funkcije
     //Ker je <div> jsx expression ga lahko uporabljam kot stringe in integerje
+    //spodnje ukaze bi lahko izvedel kar v vrstici vendar je tako mogoče bolj pregledno
     renderTemp = ({ id, temp}) => <div key={id+1}>{temp}</div>            // {napoved.map(this.renderTemp)}
     renderPritisk = ({ id, tlak}) => <div key={id+2}>{tlak}</div>         // {napoved.map(this.renderPritisk)}
     renderVlaga = ({ id, vlaznost}) => <div key={id+3}>{vlaznost}</div>   // {napoved.map(this.renderVlaga)}
@@ -39,7 +40,7 @@ class weather extends Component {
 
 
     render() { 
-        //naredim novo spremeljivko napoved ki ji pripišem vrednost statea
+        //naredim nov objekt napoved ki mu pripišem vrednost objekta state
         const {napoved} = this.state;
         return (  
         <div>
