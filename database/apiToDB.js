@@ -1,8 +1,8 @@
-#
+
 var mysql = require('mysql');
 let request = require('request');
 
-let apiKey = '27f14940419fb1c0b5fad02174a97396';
+let apiKey = '';
 let city = 'Preddvor';
 let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`
 
@@ -14,8 +14,8 @@ function writeToDB() {
     //definriam potrebne konstante za povezavo in pisanje v mariadb podatkovno bazo
     var con = mysql.createConnection({
         host: "localhost",
-        user: "jakob",
-        password: "68941",
+        user: "",
+        password: "",
         database: "vreme"
       });
     
