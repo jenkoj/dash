@@ -1,11 +1,17 @@
+/* izvorna koda https://www.w3schools.com/howto/howto_css_switch.asp*/
+/* 90% kode sem spremenil ampak se mi vseeno zdi da je potreben vir*/
 .switch {
     position: relative;
     display: inline-block;
     width: 120px;
     height: 120px;
-    
+    border-radius: 14px;
   }
   
+  .switch:hover {
+    box-shadow: 0 10px 14px 0 rgba(0,0,0,0.2);
+  }
+
   .switch input { 
     opacity: 0;
     width: 0;
@@ -48,10 +54,12 @@
   
   .slider.round {
     border-radius: 14px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.02), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
   }
   
   .slider.round:before {
     border-radius: 15%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.02), 0 6px 20px 0 rgba(0, 0, 0, 0.1);
   }
   
   span {
