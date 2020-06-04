@@ -2,7 +2,7 @@
 var mysql = require('mysql');
 let request = require('request');
 
-let apiKey = '';
+let apiKey = '27f14940419fb1c0b5fad02174a97396';
 let city = 'Preddvor';
 let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`
 
