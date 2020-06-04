@@ -4,7 +4,7 @@ import InfoBlock from "./utils/infoblocks/InfoBlock"
 //vključim bootstrap
 import {Container, Row, Col} from 'react-bootstrap';
 
-//infoBlock mi omogoča,da passam ime in informacijo skozi 
+//infoBlock mi omogoča,da passam ime in informacijo kot atribut
 export default function Rezka() {
     return (
         <div >
