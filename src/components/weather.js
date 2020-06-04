@@ -14,7 +14,7 @@ class weather extends Component {
      }
 
     //počakam da se class mounta in potem naredim api request
-    //to je good practice
+    //to je good practice, takemu eventu/funkciji se reče lifecycle hook
      componentDidMount(){
          this.getNapoved();
      }
@@ -41,6 +41,7 @@ class weather extends Component {
 
     render() { 
         //naredim nov objekt napoved ki mu pripišem vrednost objekta state
+        //izraz za to je tudi object descructuring 
         const {napoved} = this.state;
         return (  
         <div>

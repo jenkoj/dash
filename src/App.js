@@ -6,7 +6,7 @@ import Home from "./components/home"
 import Rezka from "./components/rezka"
 import Weather from "./components/weather"
 
-// uvozim modul za navigacijo
+//uvozim modul za navigacijo
 import NavigationBar from "./components/utils/navbars/navigationBar"
 
 function App() {
