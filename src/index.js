@@ -9,7 +9,7 @@ import {BrowserRouter} from "react-router-dom"
 //importam appikacijo (vse je napisano tam)
 import App from './App';
 
-//renderiram virtualni DOM
+//renderiram virtualni DOM 
 ReactDOM.render(
   <BrowserRouter>
     <App/>
