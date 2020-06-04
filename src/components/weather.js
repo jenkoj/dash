@@ -10,17 +10,19 @@ import {Container, Row, Col} from 'react-bootstrap';
 class weather extends Component {
     //definrial sem spremelnjivko
     state = { 
-        napoved: [1]
+        napoved: []
      }
 
-    //mountam request 
+    //počakam da se komponenta "ustali" in potem naredim api request
+    //to je good practice
      componentDidMount(){
          this.getNapoved();
      }
 
-    // definiram ta request z veriženjem
+    // definiram request na backend
     getNapoved = () =>{
         fetch("http://89.212.216.214:4000/napoved")
+        //podatke dobim v json
         .then(response => response.json())
         //vpišem response v state spremenljivko
         .then(response => this.setState({ napoved: response.podatki}))
@@ -28,11 +30,12 @@ class weather extends Component {
         .catch(err => console.error(err))
     }
 
-
-    renderTemp = ({ id, temp}) => <div key={id}>{temp}</div>            // {napoved.map(this.renderTemp)}
-    renderPritisk = ({ id, tlak}) => <div key={id}>{tlak}</div>         // {napoved.map(this.renderPritisk)}
-    renderVlaga = ({ id, vlaznost}) => <div key={id}>{vlaznost}</div>   // {napoved.map(this.renderVlaga)}
-    renderOblac = ({ id, oblacnost}) => <div key={id}>{oblacnost}</div> // {napoved.map(this.renderOblac)}
+    //definiram metode oziroma funkcije
+    //Ker je <div> jsx expression ga lahko uporabljam kot stringe in integerje
+    renderTemp = ({ id, temp}) => <div key={id+1}>{temp}</div>            // {napoved.map(this.renderTemp)}
+    renderPritisk = ({ id, tlak}) => <div key={id+2}>{tlak}</div>         // {napoved.map(this.renderPritisk)}
+    renderVlaga = ({ id, vlaznost}) => <div key={id+3}>{vlaznost}</div>   // {napoved.map(this.renderVlaga)}
+    renderOblac = ({ id, oblacnost}) => <div key={id+4}>{oblacnost}</div> // {napoved.map(this.renderOblac)}
 
 
     render() { 

@@ -1,4 +1,5 @@
 //definiram potrebne knjižnice
+//express je framework ki je zgrajen na http knjižnici
 const express = require("express");
 const cors = require("cors");
 const mysql = require('mysql');
@@ -24,6 +25,7 @@ const con = mysql.createConnection({
 
 
 // uporabim prej definiran objekt con, da se povežem na podatkovno bazo, v primeru errorja ga ujamem in izpišem
+// => se imenuje fat arrow in ponenostavi zapis funkcije. enak zapis z navadno funkcijo je function(err){koda}
 con.connect(err =>{
     if(err){
         return err;
