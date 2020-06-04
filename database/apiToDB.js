@@ -1,4 +1,4 @@
-// uvozim knjižnice za podatkovno bazo ter api klice
+#
 var mysql = require('mysql');
 let request = require('request');
 
