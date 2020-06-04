@@ -24,7 +24,7 @@ class weather extends Component {
         fetch("http://89.212.216.214:4000/napoved")
         //podatke dobim v json
         .then(response => response.json())
-        //vpišem response v state spremenljivko
+        //vpišem response v state spremenljivko (react ne updtejta strani ob spremebi kot angular in moraš ročno pognati setstate)
         .then(response => this.setState({ napoved: response.podatki}))
         //v primeru napake returnam error
         .catch(err => console.error(err))

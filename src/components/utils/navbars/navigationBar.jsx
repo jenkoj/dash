@@ -2,6 +2,7 @@
 import React from 'react';
 import "./navigationBar.css"
 import {Navbar, Nav} from 'react-bootstrap';
+//link mi omogoča da se stran ne nalaga ob preklipu strani
 import {Link} from "react-router-dom"
 
 // v spodnji funkciji uporabim boostrap knjižnico za navigacijski zavihek

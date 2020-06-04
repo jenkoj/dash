@@ -1,10 +1,11 @@
 // uvozim knjižnice za podatkovno bazo ter api klice
 var mysql = require('mysql');
-//unirest je lahkotna knjižnica za HTTP klice
-var unirest = require("unirest");
+let request = require('request');
 
-// naredim req objekt kjer bom zahteval infromacije iz url-ja alternativen ukaz unirest.get("url")
-var req = unirest("GET", "https://community-open-weather-map.p.rapidapi.com/weather");
+let apiKey = '27f14940419fb1c0b5fad02174a97396';
+let city = 'Preddvor';
+let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`
+
 let rawdata;
 
 //definiram funkcijo ki bo ob klicu zapisala podatke v podatkovno bazo
@@ -13,8 +14,8 @@ function writeToDB() {
     //definriam potrebne konstante za povezavo in pisanje v mariadb podatkovno bazo
     var con = mysql.createConnection({
         host: "localhost",
-        user: "/",
-        password: "/",
+        user: "jakob",
+        password: "68941",
         database: "vreme"
       });
     
@@ -37,32 +38,11 @@ function writeToDB() {
     });
 }
 
-// v req objekt dodam parametre ki jih bom poslal API-ju
-req.query( {
-	"id": "2172797",
-	"units": "%22metric%22",
-	"mode": "JSON",
-	"q": "Preddvor"
-});
-
-// dodam moj api ključ (na voljo imam le 100 requestov na dan)
-req.headers({
-	"x-rapidapi-host": "community-open-weather-map.p.rapidapi.com",
-	"x-rapidapi-key": "/"
-});
-
-//zaključim request in naredim funckijo z parametrom res oz response
-
-req.end(function (res) {
-    //handlam error
-    if (res.error) throw new Error(res.error);
-    //podatke znotraj res objekta zapišem v rawdata spremenjlivko
-    rawdata = res.body;
-    //kličem funckicjo zgoraj
-    writeToDB();
-});
-
-
-
-
-
+request(url, function (err, response) {
+    if(err){
+      console.log('error:', error);
+    } else {
+      rawdata = JSON.parse(response.body)
+      writeToDB();
+    }
+  });
