@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 //importam css modul za stil
 import styles from "./LightSwitch.module.css"
+//import { response } from 'express';
 
 
 class LightSwitch extends Component {
@@ -12,11 +13,44 @@ class LightSwitch extends Component {
 
     //definiram onchage arrow funkcijo ki se pokliče ob klicu
     //ker na drugi strani ni corsa server javi error ob klicu
+    //deluje zato ker fetch vedno uspe vedno pride na cilj razen če je dejanski network err
     onChangeStikalo = () =>{
     this.setState(intialState => ({isStikalo: !intialState.isStikalo}));
-    (this.state.isStikalo) ? fetch("http://"+this.props.ip+"/?set=off") : fetch("http://"+this.props.ip+"/?set=on")
+    (this.state.isStikalo) ? this.statusRequest(): this.offRequest()
     }
 
+    onRequest = () =>{
+        fetch("http://"+this.props.ip+"/?set=on",
+        {
+        method:'GET',
+        mode:'no-cors',
+        }
+        )
+        
+    }
+
+    offRequest = () =>{
+        fetch("http://"+this.props.ip+"/?set=off",
+        {
+        method:'GET',
+        mode:'no-cors',
+        }
+        )
+        .catch(err => console.log(err))
+    }
+
+    statusRequest = () =>{
+        fetch("http://"+this.props.ip+"/",
+        {
+        method:'GET',
+        mode:'no-cors',
+        }
+        )
+        .catch(err => console.log(err))
+    }
+
+    
+    
     //tu sem naredil tipko, ki sprejema parametre ki jih passam ko kličem komponento (primer: this.props.header)
     render() { 
         return ( 

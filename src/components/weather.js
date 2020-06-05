@@ -21,12 +21,13 @@ class weather extends Component {
 
     // definiram request na backend
     getNapoved = () =>{
+        //fetch API klic vrne promise
         fetch("http://89.212.216.214:4000/napoved")
-        //podatke dobim v json
+        //podatke dobim v json zato moram programu povedati da naj jih jemlje kot json
         .then(response => response.json())
-        //vpišem response v state spremenljivko (react ne updtejta strani ob spremebi kot angular in moraš ročno pognati setstate)
+        //vpišem response (promise) v state spremenljivko (react ne updtejta strani ob spremebi kot angular in moraš ročno pognati setstate)
         .then(response => this.setState({ napoved: response.podatki}))
-        //v primeru napake returnam error
+        //v primeru napake returnam error -> error bo javil če bo problem z fetchom samim
         .catch(err => console.error(err))
     }
 
