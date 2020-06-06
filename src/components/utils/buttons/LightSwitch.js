@@ -16,7 +16,7 @@ class LightSwitch extends Component {
     //deluje zato ker fetch vedno uspe vedno pride na cilj razen če je dejanski network err
     onChangeStikalo = () =>{
     this.setState(intialState => ({isStikalo: !intialState.isStikalo}));
-    (this.state.isStikalo) ? this.statusRequest(): this.offRequest()
+    (this.state.isStikalo) ? this.onRequest(): this.offRequest()
     }
 
     onRequest = () =>{
@@ -39,17 +39,7 @@ class LightSwitch extends Component {
         .catch(err => console.log(err))
     }
 
-    statusRequest = () =>{
-        fetch("http://"+this.props.ip+"/",
-        {
-        method:'GET',
-        mode:'no-cors',
-        }
-        )
-        .catch(err => console.log(err))
-    }
-
-    
+   
     
     //tu sem naredil tipko, ki sprejema parametre ki jih passam ko kličem komponento (primer: this.props.header)
     render() { 
