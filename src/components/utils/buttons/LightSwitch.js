@@ -16,7 +16,7 @@ class LightSwitch extends Component {
     //deluje zato ker fetch vedno uspe vedno pride na cilj razen če je dejanski network err
     onChangeStikalo = () =>{
     this.setState(intialState => ({isStikalo: !intialState.isStikalo}));
-    (this.state.isStikalo) ? this.onRequest(): this.offRequest()
+    (this.state.isStikalo) ? this.offRequest(): this.onRequest()
     }
 
     onRequest = () =>{
