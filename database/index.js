@@ -36,7 +36,7 @@ V spodnjih dveh vrsticah uporabim prej definiran objekt app (serve) da v primeru
 get requesta odgovorim z neko vsebino. Tu se spomnimo da server že posluša in čaka na requeste
 */
 
-app.get('/napoved',(req ,res) =>{
+app.get('/napoved',(res) =>{
     //iz serverja vedno izberem nazadnje vpisan podatek
     con.query("SELECT * FROM napoved ORDER BY id DESC LIMIT 1", function (err, result) {
         if (err){
@@ -48,7 +48,7 @@ app.get('/napoved',(req ,res) =>{
     });
 });
 
-app.get('/',(req ,res) =>{
+app.get('/',(res) =>{
     res.send("to je root pojdi drugam recimo na /napoved");
 })
 

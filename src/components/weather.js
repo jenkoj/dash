@@ -20,7 +20,7 @@ class weather extends Component {
      }
 
     // definiram request na backend
-    getNapoved = () =>{
+    getNapoved = () => {
         //fetch API klic vrne promise
         fetch("http://89.212.216.214:4000/napoved")
         //podatke dobim v json zato moram programu povedati da naj jih jemlje kot json

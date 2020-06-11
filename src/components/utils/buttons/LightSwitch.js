@@ -13,19 +13,19 @@ class LightSwitch extends Component {
     //definiram onchage arrow funkcijo ki se pokliče ob klicu
     //ker na drugi strani ni corsa server javi error ob klicu
     //deluje zato ker fetch vedno uspe vedno pride na cilj razen če je dejanski network err
-    onChangeStikalo = () =>{
-        this.setState(intialState => ({isStikalo: !intialState.isStikalo}));
+    onChangeStikalo = () => {
+        this.setState(initState => ({isStikalo: !initState.isStikalo}));
         (this.state.isStikalo) ? this.offRequest(): this.onRequest()
     }
 
-    onRequest = () =>{
+    onRequest = () => {
         fetch("http://"+this.props.ip+"/?set=on",
         {
         method:'GET',
         mode:'no-cors',
         }
         )
-        
+        .catch(err => console.log(err))
     }
 
     offRequest = () =>{
