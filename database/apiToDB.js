@@ -1,10 +1,12 @@
 
-var mysql = require('mysql');
-let request = require('request');
+const mysql = require('mysql');
+const request = require('request');
 
-let apiKey = '27f14940419fb1c0b5fad02174a97396';
-let city = 'Preddvor';
-let url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`
+const apiKey = '27f14940419fb1c0b5fad02174a97396';
+const city = 'Preddvor';
+const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`
+
+//http://api.openweathermap.org/data/2.5/weather?q=Preddvor&appid=27f14940419fb1c0b5fad02174a97396
 
 let rawdata;
 
@@ -12,7 +14,7 @@ let rawdata;
 function writeToDB() {
 
     //definriam potrebne konstante za povezavo in pisanje v mariadb podatkovno bazo
-    var con = mysql.createConnection({
+    let con = mysql.createConnection({
         host: "localhost",
         user: "",
         password: "",
@@ -30,7 +32,7 @@ function writeToDB() {
         var sql = "INSERT INTO napoved (temp, tlak, vlaznost, oblacnost) VALUES ('"+tempInCels+"','"+rawdata.main.pressure+" hPa"+"','"+rawdata.main.humidity+"%"+"','"+rawdata.clouds.all+"%"+"')";
         
         //pridobim informacijo od serverja (ack) da se je podatke vpisal
-        con.query(sql, function (err, result,) {
+        con.query(sql, function (err) {
         if (err) throw err;
         console.log("1 record inserted");
         process.exit()

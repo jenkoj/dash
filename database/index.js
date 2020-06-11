@@ -12,7 +12,6 @@ app.use(cors());
 //nastavim port kjer posušam in začnem poslušati
 app.listen(4000, () => {
     console.log("Vreme Server listening at 4000");
-
 });
 
 // naredim con objekt kjer definiram parametre ki so potrebi ni povezovanju na sql server
@@ -39,7 +38,7 @@ get requesta odgovorim z neko vsebino. Tu se spomnimo da server že posluša in 
 
 app.get('/napoved',(req ,res) =>{
     //iz serverja vedno izberem nazadnje vpisan podatek
-    con.query("SELECT * FROM napoved ORDER BY id DESC LIMIT 1", function (err, result, fields) {
+    con.query("SELECT * FROM napoved ORDER BY id DESC LIMIT 1", function (err, result) {
         if (err){
             return res.send(err)
         }
