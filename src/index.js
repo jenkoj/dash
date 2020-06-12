@@ -6,10 +6,10 @@ import "bootstrap/dist/css/bootstrap.css"
 
 //browser router mi omogoča da imam 3 strani
 import {BrowserRouter} from "react-router-dom"
-//importam appikacijo (vse je napisano tam)
+//importam appikacijo (tam je vse napisano)
 import App from './App';
 
-//renderiram virtualni DOM 
+//renderiram DOM 
 ReactDOM.render(
   <BrowserRouter>
     <App/>
