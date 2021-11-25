@@ -2,6 +2,8 @@
 import React, { Component } from 'react'
 import InfoBlock from "./utils/infoblocks/InfoBlock"
 
+import Graph from "./utils/graphs/graph"
+
 //uvozim css modul zaradi pisave  
 import styles from "./utils/infoblocks/InfoBlock.module.css"
 import {Container, Row, Col} from 'react-bootstrap';

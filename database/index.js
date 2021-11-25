@@ -16,7 +16,7 @@ app.listen(4000, () => {
 
 // naredim con objekt kjer definiram parametre ki so potrebi ni povezovanju na sql server
 const con = mysql.createConnection({
-    host: "localhost",
+    host: "10.10.40.140",
     user: "secret password",
     password: "secret password",
     database: "vreme"
