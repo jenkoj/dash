@@ -8,7 +8,7 @@ exec("curl " + ip, (error, stdout, stderr) => {
 
             //parse html
             let st = stdout.split('<!--#state-->')[1].split("</h1>")[0];
-            
+            console.log(st)
             if (st == "on") switchState = 1;
             else switchState = 0;
 
@@ -17,3 +17,4 @@ exec("curl " + ip, (error, stdout, stderr) => {
             console.log("error while getting switch state")
         }
 })
+

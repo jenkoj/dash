@@ -4,9 +4,11 @@ const express = require("express");
 const cors = require("cors");
 const mysql = require('mysql');
 var fs = require('fs');
+const exec = require("child_process").exec;
+const { SIGPWR } = require("constants");
 
 try {  
-    var data = fs.readFileSync('../passwords/mysql.txt', 'utf8');
+    var data = fs.readFileSync('../pass/mysql.txt', 'utf8');
     dataSplit = data.toString().split("\n");
     username = dataSplit[0].split(":")[1];
     password = dataSplit[1].split(":")[1];    
@@ -33,7 +35,7 @@ const conWeather = mysql.createConnection({
     database: "vreme"
   });
 
-  const conPower = mysql.createConnection({
+const conPower = mysql.createConnection({
     host: "10.10.40.140",
     user: username,
     password: password,
@@ -42,7 +44,7 @@ const conWeather = mysql.createConnection({
 
 // uporabim prej definiran objekt con, da se povežem na podatkovno bazo, v primeru errorja ga ujamem in izpišem
 // => se imenuje fat arrow in ponenostavi zapis funkcije. enak zapis z navadno funkcijo je function(err){koda}
-con.connect(err =>{
+conWeather.connect(err =>{
     if(err){
         return err;
     }
@@ -53,9 +55,9 @@ V spodnjih dveh vrsticah uporabim prej definiran objekt app (serve) da v primeru
 get requesta odgovorim z neko vsebino. Tu se spomnimo da server že posluša in čaka na requeste
 */
 
-app.get('/napoved',(res) =>{
+app.get('/weather',(req,res) =>{
     //iz serverja vedno izberem nazadnje vpisan podatek
-    con.query("SELECT * FROM napoved ORDER BY id DESC LIMIT 1", function (err, result) {
+    conWeather.query("SELECT * FROM napoved ORDER BY id DESC LIMIT 1", function (err, result) {
         if (err){
             return res.send(err)
         }
@@ -66,9 +68,9 @@ app.get('/napoved',(res) =>{
 });
 
 
-app.get('/napoved',(res) =>{
+app.get('/power',(req, res) =>{
     //iz serverja vedno izberem nazadnje vpisan podatek
-    con.query("SELECT * FROM napoved ORDER BY id DESC LIMIT 1", function (err, result) {
+    conPower.query("SELECT * FROM meritve ORDER BY id DESC LIMIT 1", function (err, result) {
         if (err){
             return res.send(err)
         }
@@ -78,7 +80,49 @@ app.get('/napoved',(res) =>{
     });
 });
 
-app.get('/',(res) =>{
-    res.send("to je root pojdi drugam recimo na /napoved");
+app.get('/esp/:ip/status',(req, res) =>{
+
+    let switchState;
+    ip = req.params.ip
+
+    exec("curl " + ip, (error, stdout, stderr) => {
+        try {
+            //parse html
+            let st = stdout.split('<!--#state-->')[1].split("</h1>")[0];
+            if (st == "on") switchState = 1;
+            else switchState = 0;
+            res.json('{state:'+switchState+'}')
+
+        } catch(typeError){
+            switchState = 0;
+            console.log("error while getting switch state")
+        }
+    })  
+});
+
+app.get('/esp/:ip/set/:cmd',(req, res) =>{
+
+    let switchState;
+    ip = req.params.ip
+    cmd = req.params.cmd
+    exec("curl " + ip+"/"+cmd, (error, stdout, stderr) => {
+        try {
+            //parse html
+            let st = stdout.split('<p>')[1].split("</p>")[0];
+            
+            if (cmd == "on") switchState = 1;
+            else switchState = 0;
+            res.json('{state:'+switchState+'}')
+
+        } catch(typeError){
+            switchState = 0;
+            console.log("error")
+        }
+    })  
+});
+
+
+app.get('/',(req,res) =>{
+    res.send("to je root pojdi drugam recimo na /weather");
 })
 
