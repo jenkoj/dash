@@ -7,6 +7,8 @@ import InfoBlock from "./utils/infoblocks/InfoBlock"
 import styles from "./utils/infoblocks/InfoBlock.module.css"
 import {Container, Row, Col} from 'react-bootstrap';
 
+import creds from "../creds/pass.json";
+
 
 class weather extends Component {
     //definrial sem spremelnjivko
@@ -25,7 +27,7 @@ class weather extends Component {
     // definiram request na backend
     getNapoved = () => {
         //fetch API klic vrne promise
-        fetch("http://10.10.40.140:4000/weather")
+        fetch("http://"+creds.ip.api+"/weather")
         //podatke dobim v json zato moram programu povedati da naj jih jemlje kot json
         .then(response => response.json())
         //vpišem response (promise) v state spremenljivko (react ne updtejta strani ob spremebi kot angular in moraš ročno pognati setstate)

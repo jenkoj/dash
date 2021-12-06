@@ -16,7 +16,7 @@ class LightSwitch extends Component {
         
         if (this.props.ip == "10.10.10.104"){
             //console.log("before ip",this.props.ip,"state",this.state.isStikalo)
-            fetch("http://10.10.40.140:4000/esp/"+this.props.ip+"/state/"+creds.esp.key)
+            fetch("http://"+creds.ip.api+"/esp/"+this.props.ip+"/state/"+creds.esp.key)
             .then(response => response.json())
             .then(response => {
                 var response = (response.state === 'true');
@@ -42,7 +42,7 @@ class LightSwitch extends Component {
 
     
     onRequest = () => {
-        fetch("http://10.10.40.140:4000/esp/"+this.props.ip+"/set/on/"+creds.esp.key,
+        fetch("http://"+creds.ip.api+"/esp/"+this.props.ip+"/set/on/"+creds.esp.key,
         {
         method:'GET',
         mode:'no-cors',
@@ -52,7 +52,7 @@ class LightSwitch extends Component {
     }
 
     offRequest = () =>{
-        fetch("http://10.10.40.140:4000/esp/"+this.props.ip+"/set/off/"+creds.esp.key,
+        fetch("http://"+creds.ip.api+"/esp/"+this.props.ip+"/set/off/"+creds.esp.key,
         {
         method:'GET',
         mode:'no-cors',

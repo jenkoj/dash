@@ -4,7 +4,9 @@ import InfoBlock from "./utils/infoblocks/InfoBlock"
 
 //uvozim css modul zaradi pisave  
 import styles from "./utils/infoblocks/InfoBlock.module.css"
-import {embed,Container, Row, Col} from 'react-bootstrap';
+import {Container, Row, Col} from 'react-bootstrap';
+
+import creds from "../creds/pass.json";
 
 
 class power extends Component {
@@ -24,7 +26,7 @@ class power extends Component {
     // definiram request na backend
     getNapoved = () => {
         //fetch API klic vrne promise
-        fetch("http://10.10.40.140:4000/power")
+        fetch("http://"+creds.ip.api+"/power")
         //podatke dobim v json zato moram programu povedati da naj jih jemlje kot json
         .then(response => response.json())
         //vpišem response (promise) v state spremenljivko (react ne updtejta strani ob spremebi kot angular in moraš ročno pognati setstate)
