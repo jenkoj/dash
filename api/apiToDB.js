@@ -35,13 +35,13 @@ function writeToDB() {
     
     //pretvorim podatke iz kelvinov v stopinje celzija
     let tempInCels = rawdata.main.temp - 273.15;
-    tempInCels = Math.round(tempInCels,4) + "°C";
+    tempInCels = Math.round(tempInCels,4);
     
     // uporaim con objekt za povezavo na bazo in vanjo vpišem 4 podatke
     con.connect(function(err) {
         if (err) throw err;
         console.log("Connected!");
-        var sql = "INSERT INTO napoved (time, temp, tlak, vlaznost, oblacnost) VALUES (CURRENT_TIMESTAMP,'"+tempInCels+"','"+rawdata.main.pressure+" hPa"+"','"+rawdata.main.humidity+"%"+"','"+rawdata.clouds.all+"%"+"')";
+        var sql = "INSERT INTO napoved (time, temp, tlak, vlaznost, oblacnost) VALUES (CURRENT_TIMESTAMP,'"+tempInCels+"','"+rawdata.main.pressure+"','"+rawdata.main.humidity+"','"+rawdata.clouds.all+"')";
         
         //pridobim informacijo od serverja (ack) da se je podatke vpisal
         con.query(sql, function (err) {

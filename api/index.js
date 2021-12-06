@@ -80,11 +80,10 @@ app.get('/power',(req, res) =>{
     });
 });
 
-app.get('/esp/:ip/status/:key',(req, res) =>{
+app.get('/esp/:ip/state/:key',(req, res) =>{
 
+    //rolling api key must match
     if (data.esp.key == req.params.key){
-
-        
 
         let switchState;
         ip = req.params.ip
@@ -93,40 +92,48 @@ app.get('/esp/:ip/status/:key',(req, res) =>{
             try {
             //parse html
             let st = stdout.split('<!--#state-->')[1].split("</h1>")[0];
-            if (st == "on") switchState = 1;
-            else switchState = 0;
-            res.json('{state:'+switchState+'}')
+            if (st == "on") switchState = "true";
+            else switchState = "false";
+            res.json({state:switchState})
 
             } catch(typeError){
-                switchState = 0;
+                switchState = "false";
                 console.log("error while getting switch state")
             }
         })  
         
-    }else{
+    }
+    else{
         res.send("invalid api key")
    }
 });
 
 app.get('/esp/:ip/set/:cmd/:key',(req, res) =>{
 
-    let switchState;
-    ip = req.params.ip
-    cmd = req.params.cmd
-    exec("curl " + ip+"/"+cmd, (error, stdout, stderr) => {
-        try {
-            //parse html
-            let st = stdout.split('<p>')[1].split("</p>")[0];
-            
-            if (cmd == "on") switchState = 1;
-            else switchState = 0;
-            res.json('{state:'+switchState+'}')
+    //rolling api key must match
+    if (data.esp.key == req.params.key){
 
-        } catch(typeError){
-            switchState = 0;
-            console.log("error")
-        }
-    })  
+        let switchState;
+        ip = req.params.ip
+        cmd = req.params.cmd
+        exec("curl " + ip+"/"+cmd, (error, stdout, stderr) => {
+            try {
+                //parse html
+                let st = stdout.split('<p>')[1].split("</p>")[0];
+                
+                if (cmd == "on") switchState = 1;
+                else switchState = 0;
+                res.json('{state:'+switchState+'}')
+
+            } catch(typeError){
+                switchState = 0;
+                console.log("error")
+            }
+        })  
+    }
+    else{
+        res.send("invalid api key")
+    }
 });
 
 
