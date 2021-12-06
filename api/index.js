@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 //definiram potrebne knjižnice
 //express je framework ki je zgrajen na http knjižnici
 const express = require("express");
@@ -8,11 +10,9 @@ const exec = require("child_process").exec;
 const { SIGPWR } = require("constants");
 
 try {  
-    var data = fs.readFileSync('../pass/mysql.txt', 'utf8');
-    dataSplit = data.toString().split("\n");
-    username = dataSplit[0].split(":")[1];
-    password = dataSplit[1].split(":")[1];    
-    
+    var data = fs.readFileSync('../pass/pass.json', 'utf8');
+    data = JSON.parse(data)
+   
 } catch(e) {
     console.log('Error:', e.stack);
 }
@@ -30,15 +30,15 @@ app.listen(4000, () => {
 // naredim con objekt kjer definiram parametre ki so potrebi ni povezovanju na sql server
 const conWeather = mysql.createConnection({
     host: "10.10.40.140",
-    user: username,
-    password: password,
+    user: data.mysql.user,
+    password: data.mysql.pass,
     database: "vreme"
   });
 
 const conPower = mysql.createConnection({
     host: "10.10.40.140",
-    user: username,
-    password: password,
+    user: data.mysql.user,
+    password: data.mysql.pass,
     database: "poraba"
   });
 
@@ -80,27 +80,35 @@ app.get('/power',(req, res) =>{
     });
 });
 
-app.get('/esp/:ip/status',(req, res) =>{
+app.get('/esp/:ip/status/:key',(req, res) =>{
 
-    let switchState;
-    ip = req.params.ip
+    if (data.esp.key == req.params.key){
 
-    exec("curl " + ip, (error, stdout, stderr) => {
-        try {
+        
+
+        let switchState;
+        ip = req.params.ip
+
+        exec("curl " + ip, (error, stdout, stderr) => {
+            try {
             //parse html
             let st = stdout.split('<!--#state-->')[1].split("</h1>")[0];
             if (st == "on") switchState = 1;
             else switchState = 0;
             res.json('{state:'+switchState+'}')
 
-        } catch(typeError){
-            switchState = 0;
-            console.log("error while getting switch state")
-        }
-    })  
+            } catch(typeError){
+                switchState = 0;
+                console.log("error while getting switch state")
+            }
+        })  
+        
+    }else{
+        res.send("invalid api key")
+   }
 });
 
-app.get('/esp/:ip/set/:cmd',(req, res) =>{
+app.get('/esp/:ip/set/:cmd/:key',(req, res) =>{
 
     let switchState;
     ip = req.params.ip
@@ -123,6 +131,6 @@ app.get('/esp/:ip/set/:cmd',(req, res) =>{
 
 
 app.get('/',(req,res) =>{
-    res.send("to je root pojdi drugam recimo na /weather");
+    res.send("Hi, this is dash API!<br/>Go to:<br/> /weather for weather report <br/> /power for current power usage <br/> /esp/ip/status for esp swithc status  <br/> /esp/ip/set/state to set esp switch to wanted state (on/off)");
 })
 

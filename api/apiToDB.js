@@ -1,10 +1,22 @@
+#!/usr/bin/env node
 
 const mysql = require('mysql');
 const request = require('request');
+var fs = require('fs');
 
-const apiKey = '27f14940419fb1c0b5fad02174a97396';
+try {  
+  var data = fs.readFileSync('../pass/pass.json', 'utf8');
+  data = JSON.parse(data)
+
+} catch(e) {
+  console.log('Error:', e.stack);
+}
+
+
+const apiKey = data.weather.key;
 const city = 'Preddvor';
 const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`
+
 
 //http://api.openweathermap.org/data/2.5/weather?q=Preddvor&appid=27f14940419fb1c0b5fad02174a97396
 
@@ -16,8 +28,8 @@ function writeToDB() {
     //definriam potrebne konstante za povezavo in pisanje v mariadb podatkovno bazo
     let con = mysql.createConnection({
         host: "localhost",
-        user: "",
-        password: "",
+        user: data.mysql.user,
+        password: data.mysql.pass,
         database: "vreme"
       });
     
@@ -29,7 +41,7 @@ function writeToDB() {
     con.connect(function(err) {
         if (err) throw err;
         console.log("Connected!");
-        var sql = "INSERT INTO napoved (temp, tlak, vlaznost, oblacnost) VALUES ('"+tempInCels+"','"+rawdata.main.pressure+" hPa"+"','"+rawdata.main.humidity+"%"+"','"+rawdata.clouds.all+"%"+"')";
+        var sql = "INSERT INTO napoved (time, temp, tlak, vlaznost, oblacnost) VALUES (CURRENT_TIMESTAMP,'"+tempInCels+"','"+rawdata.main.pressure+" hPa"+"','"+rawdata.main.humidity+"%"+"','"+rawdata.clouds.all+"%"+"')";
         
         //pridobim informacijo od serverja (ack) da se je podatke vpisal
         con.query(sql, function (err) {
