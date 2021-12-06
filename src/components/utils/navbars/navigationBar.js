@@ -15,7 +15,7 @@ export default function navigationBar() {
             <Navbar.Collapse id="responsive-navbar-nav">
               <Nav className="mr-auto">
                 <Nav.Link as={Link} to="/" >HOME</Nav.Link>
-                <Nav.Link as={Link} to="/rezka">REZKA</Nav.Link>
+                <Nav.Link as={Link} to="/poraba">PORABA</Nav.Link>
                 <Nav.Link as={Link} to="/vreme">VREME</Nav.Link>
               </Nav>
             </Navbar.Collapse>

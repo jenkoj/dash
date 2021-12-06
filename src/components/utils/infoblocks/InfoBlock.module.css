@@ -63,8 +63,23 @@
   
   .title{
     font-weight: bold;
+    font-size: xxx-large;
     text-align: left;
     top: 10px;
   }
   
+  .subtitle{
+    font-weight: bold;
+    font-size: x-large;
+    text-align: left;
+    opacity: 0.9;
+    top: 10px;
+  }
   
+  .graph{
+    align-items: center;
+    position: relative;
+    vertical-align: middle;
+    text-align: center;
+    width:100%;
+  }

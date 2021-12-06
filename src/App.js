@@ -3,7 +3,7 @@ import React from 'react'
 import {Route} from "react-router-dom"
 //vključim relativne poti za 3 strani
 import Home from "./components/home"
-import Rezka from "./components/rezka"
+import Rezka from "./components/power"
 import Weather from "./components/weather"
 
 //uvozim modul za navigacijo
@@ -14,7 +14,7 @@ function App() {
     <div className="App">
       <NavigationBar/>
       <Route exact path="/" component={Home} />
-      <Route exact path="/rezka" component={Rezka}/>
+      <Route exact path="/poraba" component={Rezka}/>
       <Route exact path="/vreme" component={Weather}/>
     </div>
   );

@@ -14,7 +14,7 @@ export default function Home() {
            <Container fluid>
                <h1 className={styles.title}>Dnevna soba</h1>
                 <Row>
-                    <Col xs><LightSwitch header="Kavč" ip="10.10.10.128"/></Col>
+                    <Col xs><LightSwitch header="Omara" ip="10.10.10.104"/></Col>
                     <Col xs><LightSwitch header="TV" ip="10.10.10.122"/></Col>
                 </Row>
             </Container>
