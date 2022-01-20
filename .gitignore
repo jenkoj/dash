@@ -8,7 +8,7 @@
 /database/debug
 # testing
 /coverage
-
+/src/creds
 # production
 /build
 
