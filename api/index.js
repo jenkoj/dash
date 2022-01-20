@@ -10,7 +10,7 @@ const exec = require("child_process").exec;
 const { SIGPWR } = require("constants");
 
 try {  
-    var data = fs.readFileSync('../pass/pass.json', 'utf8');
+    var data = fs.readFileSync('../src/creds/pass.json', 'utf8');
     data = JSON.parse(data)
    
 } catch(e) {
@@ -24,7 +24,7 @@ const app = express();
 app.use(cors());
 //nastavim port kjer posušam in začnem poslušati
 app.listen(4000, () => {
-    console.log("Vreme Server listening at 4000");
+    console.log("API Server listening at 4000");
 });
 
 // naredim con objekt kjer definiram parametre ki so potrebi ni povezovanju na sql server
@@ -42,9 +42,28 @@ const conPower = mysql.createConnection({
     database: "poraba"
   });
 
+const conUsers = mysql.createConnection({
+    host: "10.10.40.140",
+    user: data.mysql.user,
+    password: data.mysql.pass,
+    database: "users"
+  });
+
 // uporabim prej definiran objekt con, da se povežem na podatkovno bazo, v primeru errorja ga ujamem in izpišem
 // => se imenuje fat arrow in ponenostavi zapis funkcije. enak zapis z navadno funkcijo je function(err){koda}
 conWeather.connect(err =>{
+    if(err){
+        return err;
+    }
+});
+
+conPower.connect(err =>{
+    if(err){
+        return err;
+    }
+});
+
+conUsers.connect(err =>{
     if(err){
         return err;
     }
@@ -67,6 +86,27 @@ app.get('/weather',(req,res) =>{
     });
 });
 
+app.get('/weather/digest/weekly',(req,res)=>{
+
+    yesterday = Date.now()-(1000*60*60*24*7)
+    yestedayISO = new Date(yesterday).toISOString();
+    nowISO = new Date().toISOString();
+
+    conWeather.query("SELECT * FROM napoved WHERE `time` BETWEEN '"+yestedayISO+"' AND '"+nowISO+"'", function (err, result) {
+        if (err){
+            console.log(err)
+        }
+        else {
+
+            averaged_query = calculate_average(result);
+            res.json({data:averaged_query})
+           
+        }
+    });
+
+
+
+});
 
 app.get('/power',(req, res) =>{
     //iz serverja vedno izberem nazadnje vpisan podatek
@@ -79,6 +119,26 @@ app.get('/power',(req, res) =>{
         }
     });
 });
+
+app.get('/power/digest/week',(req, res) =>{
+    //iz serverja vedno izberem nazadnje vpisan podatek
+    yesterday = Date.now()-(1000*60*60*24)
+    yestedayISO = new Date(yesterday).toISOString();
+    nowISO = new Date().toISOString();
+
+    conPower.query("SELECT * FROM meritve WHERE `time` BETWEEN '"+yestedayISO+"' AND '"+nowISO+"'", function (err, result) {
+        if (err){
+            console.log(err)
+        }
+        else {
+
+            averaged_query = calculate_average(result);
+            res.json({data:averaged_query})
+            
+        }
+    });
+});
+
 
 app.get('/esp/:ip/state/:key',(req, res) =>{
 
@@ -137,7 +197,90 @@ app.get('/esp/:ip/set/:cmd/:key',(req, res) =>{
 });
 
 
+// for parsing POST request
+const bodyParser = require("body-parser");
+const { time } = require("console");
+
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
+app.use(bodyParser.json());
+
+app.use('/login', (req, res) => { 
+
+    console.log(req.body.username)
+    console.log(req.body.password)
+
+    conUsers.query("SELECT * FROM dash WHERE username = ? and password = ?",[req.body.username,req.body.password], function (err, result) {
+        if (err){
+                
+                res.send({
+                token: err})
+        }
+        else {  
+                
+                conUsers.query("SELECT * FROM `retries` WHERE `username` LIKE ?",[req.body.username],function (err2, result2) {
+                    
+                    if (err2){
+                
+                        res.send({
+                        token: err})
+                    }
+                    
+                    if ((result.length != 0) && (result2.length < 10)){
+                        res.send({
+                        token: 'True'
+                        
+                        });
+                    }   else{
+                        num_retries = 10 - result2.length
+                        num_retries = (num_retries < 0) ? 0 : num_retries
+
+                        res.send({
+                        token: 'False',
+                        retries: num_retries
+                        });
+                        
+                        conUsers.query("INSERT INTO retries (username, password) VALUES (?, ?)",[req.body.username,req.body.password], function (err, result){})
+                    }
+
+                })
+                           
+            }
+    });
+  });
+
+
+
+//def route
 app.get('/',(req,res) =>{
     res.send("Hi, this is dash API!<br/>Go to:<br/> /weather for weather report <br/> /power for current power usage <br/> /esp/ip/status for esp swithc status  <br/> /esp/ip/set/state to set esp switch to wanted state (on/off)");
 })
 
+
+function calculate_average(result){
+
+    nowISO = new Date().toISOString();
+    avgAll = {}
+    //get keys
+    vals = result[0]
+    for (var key in vals) {
+        if (vals.hasOwnProperty(key)) {
+            
+            //use keys to fetch data
+            let count = 0
+            let sum = 0
+            for(var element of result){
+                sum += Math.abs(element[key])
+                count +=1
+            }
+            avg = sum/count
+            avg = Math.round(avg*100)/100
+            avgAll[key] = avg
+
+            }
+        }
+    avgAll.time = nowISO
+    return avgAll
+}
