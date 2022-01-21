@@ -86,13 +86,13 @@ app.get('/weather',(req,res) =>{
     });
 });
 
-app.get('/weather/digest/weekly',(req,res)=>{
+app.get('/weather/past/week',(req,res)=>{
 
-    week = Date.now()-(1000*60*60*24*7)
-    weekISO = new Date(yesterday).toISOString();
-    nowISO = new Date().toISOString();
+    pastWeek = Date.now()-(1000*60*60*24*7)
+    pastWeek = new Date(pastWeek).toISOString();
+    now = new Date().toISOString();
 
-    conWeather.query("SELECT * FROM napoved WHERE `time` BETWEEN '"+weekISO+"' AND '"+nowISO+"'", function (err, result) {
+    conWeather.query("SELECT * FROM napoved WHERE `time` BETWEEN '"+pastWeek+"' AND '"+now+"'", function (err, result) {
         if (err){
             console.log(err)
         }
@@ -118,7 +118,7 @@ app.get('/power',(req, res) =>{
     });
 });
 
-app.get('/power/today',(req, res) =>{
+app.get('/power/daily',(req, res) =>{
     //iz serverja vedno izberem nazadnje vpisan podatek
     yesterday = Date.now()-(1000*60*60*24)
     yestedayISO = new Date(yesterday).toISOString();
@@ -318,7 +318,7 @@ app.get('/',(req,res) =>{
 
 function calculate_average(result){
 
-    nowISO = new Date().toISOString();
+    now = new Date().toISOString();
     avgAll = {}
     //get keys
     vals = result[0]
@@ -338,7 +338,7 @@ function calculate_average(result){
 
             }
         }
-    avgAll.time = nowISO
+    avgAll.time = now
     return avgAll
 }
 
