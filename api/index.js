@@ -88,11 +88,11 @@ app.get('/weather',(req,res) =>{
 
 app.get('/weather/digest/weekly',(req,res)=>{
 
-    yesterday = Date.now()-(1000*60*60*24*7)
-    yestedayISO = new Date(yesterday).toISOString();
+    week = Date.now()-(1000*60*60*24*7)
+    weekISO = new Date(yesterday).toISOString();
     nowISO = new Date().toISOString();
 
-    conWeather.query("SELECT * FROM napoved WHERE `time` BETWEEN '"+yestedayISO+"' AND '"+nowISO+"'", function (err, result) {
+    conWeather.query("SELECT * FROM napoved WHERE `time` BETWEEN '"+weekISO+"' AND '"+nowISO+"'", function (err, result) {
         if (err){
             console.log(err)
         }
@@ -103,8 +103,6 @@ app.get('/weather/digest/weekly',(req,res)=>{
            
         }
     });
-
-
 
 });
 
@@ -120,7 +118,7 @@ app.get('/power',(req, res) =>{
     });
 });
 
-app.get('/power/digest/week',(req, res) =>{
+app.get('/power/today',(req, res) =>{
     //iz serverja vedno izberem nazadnje vpisan podatek
     yesterday = Date.now()-(1000*60*60*24)
     yestedayISO = new Date(yesterday).toISOString();
@@ -135,6 +133,65 @@ app.get('/power/digest/week',(req, res) =>{
             averaged_query = calculate_average(result);
             res.json({data:averaged_query})
             
+        }
+    });
+});
+
+app.get('/energy/today',(req, res) =>{
+    //iz serverja vedno izberem nazadnje vpisan podatek
+    now = new Date().toISOString();
+
+    let startOfDayEpoch = new Date().setUTCHours(0,0,0,0)
+    startOfDay = new Date(startOfDayEpoch).toISOString()
+
+    conPower.query("SELECT `Phase_1_Apparent_Power`,`Phase_2_Apparent_Power`,`Phase_3_Apparent_Power` FROM meritve WHERE `time` BETWEEN '"+startOfDay+"' AND '"+now+"'", function (err, result) {
+        if (err){
+            console.log(err)
+        }
+        else {
+
+            let [energy,price,health] = calculateEnergy(result,startOfDayEpoch,now);
+            let calculatedResults = {data:{energy:energy, price:price, health:health}}
+            console.log(calculatedResults)
+            res.send(calculatedResults)
+
+        }
+    });
+});
+
+app.get('/energy/month/:n',(req, res) =>{
+    
+    //gets date of firs day of n months back
+    let date = new Date();
+    let startOfMonth = new Date(date.getFullYear(), date.getMonth()-req.params.n, 0,25).toISOString()
+    let startOfMonthEpoch = new Date(startOfMonth).getTime()
+
+    //gets last date
+    console.log(req.params.n)
+    let untill
+    if (req.params.n == 0){
+        console.log("here")
+
+        //utill now
+        untill = new Date().toISOString();
+        console.log(untill)
+    }else{
+        console.log("here2")
+
+        //untill n-1 months back
+        untill = new Date(date.getFullYear(), date.getMonth()-req.params.n+1, 0,24).toISOString()
+    }
+
+    conPower.query("SELECT `Phase_1_Apparent_Power`,`Phase_2_Apparent_Power`,`Phase_3_Apparent_Power` FROM meritve WHERE `time` BETWEEN '"+startOfMonth+"' AND '"+untill+"'", function (err, result) {
+        if (err){
+            console.log(err)
+        }
+        else {
+
+            let [energy,price,health] = calculateEnergy(result,startOfMonthEpoch,untill);
+            let calculatedResults = {data:{energy:energy, price:price, health:health}}
+            console.log(calculatedResults)
+            res.send(calculatedResults)
         }
     });
 });
@@ -283,4 +340,32 @@ function calculate_average(result){
         }
     avgAll.time = nowISO
     return avgAll
+}
+
+function calculateEnergy(result,start,stop){
+    energy = {}
+    vals = result[0]
+    samples = result.length
+    for (var key in vals) {
+        
+        let sum = 0
+    
+        for(var element of result){
+            sum += (Math.abs(element[key]))/600
+        }
+        
+        sum = Math.round(sum*100)/100
+        energy[key] = sum
+
+    }
+        
+    energySum = 0.001*(energy.Phase_1_Apparent_Power+energy.Phase_2_Apparent_Power+energy.Phase_3_Apparent_Power) //kWh
+    energySum = Math.round(energySum*100)/100
+    price = 0.11*energySum //eur
+    price = Math.round(price*100)/100   
+
+    samples_all = 10*((new Date(stop).getTime() - start)/(1000*60))
+    health = Math.round(100*samples/samples_all)/100
+
+    return [energySum, price, health]
 }
