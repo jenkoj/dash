@@ -83,3 +83,13 @@
     text-align: center;
     width:100%;
   }
+
+
+  .spinner{
+    align-items: center;
+    position: relative;
+    vertical-align: middle;
+    text-align: center;
+    top: 30px;
+    opacity: 0.1;
+  }

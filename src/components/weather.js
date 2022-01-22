@@ -1,6 +1,7 @@
 //vključim knjižnice in zopet
 import React, { Component } from 'react'
 import InfoBlock from "./utils/infoblocks/InfoBlock"
+import SpinnerBlock from "./utils/infoblocks/SpinnerBlock"
 
 
 //uvozim css modul zaradi pisave  
@@ -14,7 +15,9 @@ class weather extends Component {
     //definrial sem spremelnjivko
     state = { 
         napoved: [],
+        loading_napoved: true,
         napovedPastWeek: [],
+        loading_napovedPastWeek: true,
         graphHeight:"400",
         graphWidth: "100%"
      }
@@ -33,7 +36,10 @@ class weather extends Component {
         //podatke dobim v json zato moram programu povedati da naj jih jemlje kot json
         .then(response => response.json())
         //vpišem response (promise) v state spremenljivko (react ne updtejta strani ob spremebi kot angular in moraš ročno pognati setstate)
-        .then(response => this.setState({ napoved: response.data}))
+        .then(response => this.setState({ 
+            loading_napoved: false,
+            napoved: response.data
+        }))
         //v primeru napake returnam error -> error bo javil če bo problem z fetchom samim
         .catch(err => console.error(err))
     }
@@ -52,7 +58,10 @@ class weather extends Component {
         //podatke dobim v json zato moram programu povedati da naj jih jemlje kot json
         .then(response => response.json())
         //vpišem response (promise) v state spremenljivko (react ne updtejta strani ob spremebi kot angular in moraš ročno pognati setstate)
-        .then(response => this.setState({ napovedPastWeek: response.data}))
+        .then(response => this.setState({ 
+            loading_napovedPastWeek: false,
+            napovedPastWeek: response.data
+        }))
         //v primeru napake returnam error -> error bo javil če bo problem z fetchom samim
         .catch(err => console.error(err))
     }
@@ -65,7 +74,7 @@ class weather extends Component {
     render() { 
         //naredim nov objekt napoved ki mu pripišem vrednost objekta state
         //izraz za to je tudi object descructuring 
-        const {napoved,napovedPastWeek} = this.state;
+        const {napoved,napovedPastWeek,loading_napoved,loading_napovedPastWeek} = this.state;
 
         // const {napovedPastWeek} = this.state;
         return (  
@@ -73,19 +82,20 @@ class weather extends Component {
             <Container fluid>
                 <h1 className={styles.title}>Trenutno stanje</h1>
                     <Row noGutters="true">
-                        <Col xs ><InfoBlock heading="temperatura" info={napoved.map(this.renderTemp)} info15="C"info2="" info3=""/></Col>
-                        <Col xs ><InfoBlock heading="pritisk" info={napoved.map(this.renderPritisk)} info2="" info3="" /> </Col>
-                        <Col xs ><InfoBlock heading="vlaga" info={napoved.map(this.renderVlaga)} info2="" info3=""/></Col>
-                        <Col xs ><InfoBlock heading="oblačnost" info={napoved.map(this.renderOblac)} info2="" info3=""/></Col>
+                        <Col xs >{ loading_napoved ? <SpinnerBlock/> : <InfoBlock heading="temperatura" info={napoved.map(this.renderTemp)} info15="C"info2="" info3=""/>}</Col>
+                        <Col xs >{ loading_napoved ? <SpinnerBlock/> : <InfoBlock heading="pritisk" info={napoved.map(this.renderPritisk)} info2="" info3="" /> }</Col>
+                        <Col xs >{ loading_napoved ? <SpinnerBlock/> : <InfoBlock heading="vlaga" info={napoved.map(this.renderVlaga)} info2="" info3=""/>}</Col>
+                        <Col xs >{ loading_napoved ? <SpinnerBlock/> : <InfoBlock heading="oblačnost" info={napoved.map(this.renderOblac)} info2="" info3=""/>}</Col>
+                        <Col xs >{ loading_napoved ? <SpinnerBlock/> : <InfoBlock heading="oblačnost" info={napoved.map(this.renderOblac)} info2="" info3=""/>}</Col>
                     </Row>
             </Container>
             <Container fluid>
                 <h1 className={styles.title}>Povprečje zadnjega tedna</h1>
                     <Row noGutters="true">
-                        <Col xs ><InfoBlock heading="temperatura" info={napovedPastWeek.map(this.renderTemp)} info15="C"info2="" info3=""/></Col>
-                        <Col xs ><InfoBlock heading="pritisk" info={napovedPastWeek.map(this.renderPritisk)} info2="" info3="" /> </Col>
-                        <Col xs ><InfoBlock heading="vlaga" info={napovedPastWeek.map(this.renderVlaga)} info2="" info3=""/></Col>
-                        <Col xs ><InfoBlock heading="oblačnost" info={napovedPastWeek.map(this.renderOblac)} info2="" info3=""/></Col>
+                        <Col xs >{ loading_napovedPastWeek ? <SpinnerBlock/> : <InfoBlock heading="temperatura" info={napovedPastWeek.map(this.renderTemp)} info15="C"info2="" info3=""/>}</Col>
+                        <Col xs >{ loading_napovedPastWeek ? <SpinnerBlock/> : <InfoBlock heading="pritisk" info={napovedPastWeek.map(this.renderPritisk)} info2="" info3="" />}</Col>
+                        <Col xs >{ loading_napovedPastWeek ? <SpinnerBlock/> : <InfoBlock heading="vlaga" info={napovedPastWeek.map(this.renderVlaga)} info2="" info3=""/>}</Col>
+                        <Col xs >{ loading_napovedPastWeek ? <SpinnerBlock/> : <InfoBlock heading="oblačnost" info={napovedPastWeek.map(this.renderOblac)} info2="" info3=""/>}</Col>
                     </Row>
             </Container>
             <Container fluid centre>

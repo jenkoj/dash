@@ -1,6 +1,7 @@
 //vključim knjižnice in zopet
 import React, { Component } from 'react'
 import InfoBlock from "./utils/infoblocks/InfoBlock"
+import SpinnerBlock from "./utils/infoblocks/SpinnerBlock"
 
 //uvozim css modul zaradi pisave  
 import styles from "./utils/infoblocks/InfoBlock.module.css"
@@ -13,7 +14,9 @@ class power extends Component {
     //definrial sem spremelnjivko
     state = { 
         usage: [],
+        loading_usage: true,
         usageDaily: [],
+        loading_usageDaily: true,
         graphHeight:"400",
         graphWidth: "100%"
      }
@@ -29,14 +32,20 @@ class power extends Component {
     getUsage = () => {
         fetch("http://"+creds.ip.api+"/power")
         .then(response => response.json())
-        .then(response => this.setState({ usage: response.data}))
+        .then(response => this.setState({ 
+            loading_usage: false,
+            usage: response.data
+        }))
         .catch(err => console.error(err))
     }
 
     getUsageDaily = () => {
         fetch("http://"+creds.ip.api+"/power/daily")
         .then(response => response.json())
-        .then(response => this.setState({ usageDaily: response.data}))
+        .then(response => this.setState({ 
+            loading_usageDaily: false,
+            usageDaily: response.data
+        }))
         .catch(err => console.error(err))
     }
 
@@ -66,28 +75,28 @@ class power extends Component {
     render() { 
         //naredim nov objekt napoved ki mu pripišem vrednost objekta state
         //izraz za to je tudi object descructuring 
-        const {usage,usageDaily} = this.state;
+        const {usage,usageDaily,loading_usage,loading_usageDaily} = this.state;
         return (  
         <div>
             <Container fluid>
                 <h1 className={styles.title}>Trenutno stanje</h1>
                     <Row noGutters="true">
-                        <Col xs ><InfoBlock heading="Napetost" info={usage.map(this.renderV1)} info2={usage.map(this.renderV2)} info3={usage.map(this.renderV3)}/></Col>
-                        <Col xs ><InfoBlock heading="Tok" info={usage.map(this.renderA1)} info2={usage.map(this.renderA2)} info3={usage.map(this.renderA3)}/></Col>
-                        <Col xs ><InfoBlock heading="Moč" info={usage.map(this.renderW1)} info2={usage.map(this.renderW2)} info3={usage.map(this.renderW3)}/></Col>
-                        <Col xs ><InfoBlock heading="cos phi" info={usage.map(this.renderPF1)} info2={usage.map(this.renderPF2)} info3={usage.map(this.renderPF3)}/></Col>
-                        <Col xs ><InfoBlock heading="frekvenca" info={usage.map(this.renderF)} info2="" info3="" /> </Col>
+                        <Col xs >{ loading_usage ? <SpinnerBlock/> : <InfoBlock heading="Napetost" info={usage.map(this.renderV1)} info2={usage.map(this.renderV2)} info3={usage.map(this.renderV3)}/>}</Col>
+                        <Col xs >{ loading_usage ? <SpinnerBlock/> : <InfoBlock heading="Tok" info={usage.map(this.renderA1)} info2={usage.map(this.renderA2)} info3={usage.map(this.renderA3)}/>}</Col>
+                        <Col xs >{ loading_usage ? <SpinnerBlock/> : <InfoBlock heading="Moč" info={usage.map(this.renderW1)} info2={usage.map(this.renderW2)} info3={usage.map(this.renderW3)}/>}</Col>
+                        <Col xs >{ loading_usage ? <SpinnerBlock/> : <InfoBlock heading="cos phi" info={usage.map(this.renderPF1)} info2={usage.map(this.renderPF2)} info3={usage.map(this.renderPF3)}/>}</Col>
+                        <Col xs >{ loading_usage ? <SpinnerBlock/> : <InfoBlock heading="frekvenca" info={usage.map(this.renderF)} info2="" info3="" />}</Col>
                        
                     </Row>
             </Container>
             <Container fluid>
                 <h1 className={styles.title}>Dnevno Povprečje</h1>
                     <Row noGutters="true">
-                        <Col xs ><InfoBlock heading="Napetost" info={usageDaily.map(this.renderV1)} info2={usageDaily.map(this.renderV2)} info3={usageDaily.map(this.renderV3)}/></Col>
-                        <Col xs ><InfoBlock heading="Tok" info={usageDaily.map(this.renderA1)} info2={usageDaily.map(this.renderA2)} info3={usageDaily.map(this.renderA3)}/></Col>
-                        <Col xs ><InfoBlock heading="Moč" info={usageDaily.map(this.renderW1)} info2={usageDaily.map(this.renderW2)} info3={usageDaily.map(this.renderW3)}/></Col>
-                        <Col xs ><InfoBlock heading="cos phi" info={usageDaily.map(this.renderPF1)} info2={usageDaily.map(this.renderPF2)} info3={usageDaily.map(this.renderPF3)}/></Col>
-                        <Col xs ><InfoBlock heading="frekvenca" info={usageDaily.map(this.renderF)} info2="" info3="" /> </Col>
+                        <Col xs >{ loading_usageDaily ? <SpinnerBlock/> : <InfoBlock heading="Napetost" info={usageDaily.map(this.renderV1)} info2={usageDaily.map(this.renderV2)} info3={usageDaily.map(this.renderV3)}/>}</Col>
+                        <Col xs >{ loading_usageDaily ? <SpinnerBlock/> : <InfoBlock heading="Tok" info={usageDaily.map(this.renderA1)} info2={usageDaily.map(this.renderA2)} info3={usageDaily.map(this.renderA3)}/>}</Col>
+                        <Col xs >{ loading_usageDaily ? <SpinnerBlock/> : <InfoBlock heading="Moč" info={usageDaily.map(this.renderW1)} info2={usageDaily.map(this.renderW2)} info3={usageDaily.map(this.renderW3)}/>}</Col>
+                        <Col xs >{ loading_usageDaily ? <SpinnerBlock/> : <InfoBlock heading="cos phi" info={usageDaily.map(this.renderPF1)} info2={usageDaily.map(this.renderPF2)} info3={usageDaily.map(this.renderPF3)}/>}</Col>
+                        <Col xs >{ loading_usageDaily ? <SpinnerBlock/> : <InfoBlock heading="frekvenca" info={usageDaily.map(this.renderF)} info2="" info3="" /> }</Col>
                        
                     </Row>
             </Container>
