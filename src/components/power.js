@@ -13,6 +13,7 @@ class power extends Component {
     //definrial sem spremelnjivko
     state = { 
         usage: [],
+        usageDaily: [],
         graphHeight:"400",
         graphWidth: "100%"
      }
@@ -20,18 +21,22 @@ class power extends Component {
     //počakam da se class mounta in potem naredim api request
     //to je good practice, takemu eventu/funkciji se reče lifecycle hook
      componentDidMount(){
-         this.getNapoved();
+         this.getUsage();
+         this.getUsageDaily();
      }
 
     // definiram request na backend
-    getNapoved = () => {
-        //fetch API klic vrne promise
+    getUsage = () => {
         fetch("http://"+creds.ip.api+"/power")
-        //podatke dobim v json zato moram programu povedati da naj jih jemlje kot json
         .then(response => response.json())
-        //vpišem response (promise) v state spremenljivko (react ne updtejta strani ob spremebi kot angular in moraš ročno pognati setstate)
-        .then(response => this.setState({ usage: response.podatki}))
-        //v primeru napake returnam error -> error bo javil če bo problem z fetchom samim
+        .then(response => this.setState({ usage: response.data}))
+        .catch(err => console.error(err))
+    }
+
+    getUsageDaily = () => {
+        fetch("http://"+creds.ip.api+"/power/daily")
+        .then(response => response.json())
+        .then(response => this.setState({ usageDaily: response.data}))
         .catch(err => console.error(err))
     }
 
@@ -61,7 +66,7 @@ class power extends Component {
     render() { 
         //naredim nov objekt napoved ki mu pripišem vrednost objekta state
         //izraz za to je tudi object descructuring 
-        const {usage} = this.state;
+        const {usage,usageDaily} = this.state;
         return (  
         <div>
             <Container fluid>
@@ -78,11 +83,12 @@ class power extends Component {
             <Container fluid>
                 <h1 className={styles.title}>Dnevno Povprečje</h1>
                     <Row noGutters="true">
-                        <Col xs ><InfoBlock heading="Napetost" info="234 V "info2="232 V " info3="225 V "/></Col>
-                        <Col xs ><InfoBlock heading="Tok" info="0.51 A" info2="0.35 A" info3="0.1 A"  /></Col>
-                        <Col xs ><InfoBlock heading="Moč" info="95.21 W" info2="69.02 W" info3="21.32 W"/></Col>
-                        <Col xs ><InfoBlock heading="cos phi" info="0.79" info2="0.86" info3="0.82"/></Col>
-                        <Col xs ><InfoBlock heading="frekvenca" info="49.98 Hz" info2="" info3="" /> </Col>
+                        <Col xs ><InfoBlock heading="Napetost" info={usageDaily.map(this.renderV1)} info2={usageDaily.map(this.renderV2)} info3={usageDaily.map(this.renderV3)}/></Col>
+                        <Col xs ><InfoBlock heading="Tok" info={usageDaily.map(this.renderA1)} info2={usageDaily.map(this.renderA2)} info3={usageDaily.map(this.renderA3)}/></Col>
+                        <Col xs ><InfoBlock heading="Moč" info={usageDaily.map(this.renderW1)} info2={usageDaily.map(this.renderW2)} info3={usageDaily.map(this.renderW3)}/></Col>
+                        <Col xs ><InfoBlock heading="cos phi" info={usageDaily.map(this.renderPF1)} info2={usageDaily.map(this.renderPF2)} info3={usageDaily.map(this.renderPF3)}/></Col>
+                        <Col xs ><InfoBlock heading="frekvenca" info={usageDaily.map(this.renderF)} info2="" info3="" /> </Col>
+                       
                     </Row>
             </Container>
             <Container fluid centre>

@@ -16,7 +16,7 @@ import NavigationBar from "./components/utils/navbars/navigationBar"
 function App() {
   const [token, setToken] = useState()
   
-  if(!token) {
+  if(token) {
     return <Login setToken={setToken} />
   }
 

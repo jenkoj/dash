@@ -14,6 +14,7 @@ class weather extends Component {
     //definrial sem spremelnjivko
     state = { 
         napoved: [],
+        napovedPastWeek: [],
         graphHeight:"400",
         graphWidth: "100%"
      }
@@ -22,6 +23,7 @@ class weather extends Component {
     //to je good practice, takemu eventu/funkciji se reče lifecycle hook
      componentDidMount(){
          this.getNapoved();
+         this.getNapovedPastWeek();
      }
 
     // definiram request na backend
@@ -31,7 +33,7 @@ class weather extends Component {
         //podatke dobim v json zato moram programu povedati da naj jih jemlje kot json
         .then(response => response.json())
         //vpišem response (promise) v state spremenljivko (react ne updtejta strani ob spremebi kot angular in moraš ročno pognati setstate)
-        .then(response => this.setState({ napoved: response.podatki}))
+        .then(response => this.setState({ napoved: response.data}))
         //v primeru napake returnam error -> error bo javil če bo problem z fetchom samim
         .catch(err => console.error(err))
     }
@@ -44,11 +46,28 @@ class weather extends Component {
     renderVlaga = ({ id, vlaznost}) => <div key={id+3}>{vlaznost+" %"}</div>   // {napoved.map(this.renderVlaga)}
     renderOblac = ({ id, oblacnost}) => <div key={id+4}>{oblacnost+" %"}</div> // {napoved.map(this.renderOblac)}
 
+    getNapovedPastWeek = () => {
+        //fetch API klic vrne promise
+        fetch("http://"+creds.ip.api+"/weather/past/week")
+        //podatke dobim v json zato moram programu povedati da naj jih jemlje kot json
+        .then(response => response.json())
+        //vpišem response (promise) v state spremenljivko (react ne updtejta strani ob spremebi kot angular in moraš ročno pognati setstate)
+        .then(response => this.setState({ napovedPastWeek: response.data}))
+        //v primeru napake returnam error -> error bo javil če bo problem z fetchom samim
+        .catch(err => console.error(err))
+    }
+
+       renderTemp2 = ({ id, temp}) => <div key={id+2}>{temp+" °C"}</div>            // {napoved.map(this.renderTemp)}
+    // renderPritisk = ({ id, tlak}) => <div key={id+2}>{tlak+" hPa"}</div>         // {napoved.map(this.renderPritisk)}
+    // renderVlaga = ({ id, vlaznost}) => <div key={id+3}>{vlaznost+" %"}</div>   // {napoved.map(this.renderVlaga)}
+    // renderOblac = ({ id, oblacnost}) => <div key={id+4}>{oblacnost+" %"}</div> // {napoved.map(this.renderOblac)}
 
     render() { 
         //naredim nov objekt napoved ki mu pripišem vrednost objekta state
         //izraz za to je tudi object descructuring 
-        const {napoved} = this.state;
+        const {napoved,napovedPastWeek} = this.state;
+
+        // const {napovedPastWeek} = this.state;
         return (  
         <div>
             <Container fluid>
@@ -61,14 +80,12 @@ class weather extends Component {
                     </Row>
             </Container>
             <Container fluid>
-                <h1 className={styles.title}>Tedenska napoved</h1>
+                <h1 className={styles.title}>Povprečje zadnjega tedna</h1>
                     <Row noGutters="true">
-                        <Col xs ><InfoBlock heading="danes"      info="oblačno" info2="60 %" info3="-1 °C"/></Col>
-                        <Col xs ><InfoBlock heading="jutri"      info="jasno" info2="79 %" info3="2 °C"/></Col>
-                        <Col xs ><InfoBlock heading="pojutrišnem"info="delno oblaćno" info2="21 %" info3="-2 °C"/></Col>
-                        <Col xs ><InfoBlock heading="čez 3 dni"  info="jasno" info2="43 %" info3="4 °C"/></Col>
-                        <Col xs ><InfoBlock heading="čez 4 dni"  info="jasno" info2="12 %" info3="5 °C"/></Col>
-                        <Col xs ><InfoBlock heading="čez 5 dni"  info="jasno" info2="10 %" info3="6 °C"/></Col>
+                        <Col xs ><InfoBlock heading="temperatura" info={napovedPastWeek.map(this.renderTemp)} info15="C"info2="" info3=""/></Col>
+                        <Col xs ><InfoBlock heading="pritisk" info={napovedPastWeek.map(this.renderPritisk)} info2="" info3="" /> </Col>
+                        <Col xs ><InfoBlock heading="vlaga" info={napovedPastWeek.map(this.renderVlaga)} info2="" info3=""/></Col>
+                        <Col xs ><InfoBlock heading="oblačnost" info={napovedPastWeek.map(this.renderOblac)} info2="" info3=""/></Col>
                     </Row>
             </Container>
             <Container fluid centre>
