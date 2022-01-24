@@ -81,7 +81,7 @@ app.get('/weather',(req,res) =>{
             return res.send(err)
         }
         else {
-            return res.json({podatki:result})
+            return res.json({data:result})
         }
     });
 });
@@ -99,7 +99,7 @@ app.get('/weather/past/week',(req,res)=>{
         else {
 
             averaged_query = calculate_average(result);
-            res.json({data:averaged_query})
+            res.json({data:[averaged_query]})
            
         }
     });
@@ -113,7 +113,7 @@ app.get('/power',(req, res) =>{
             return res.send(err)
         }
         else {
-            return res.json({podatki:result})
+            return res.json({data:result})
         }
     });
 });
@@ -131,7 +131,7 @@ app.get('/power/daily',(req, res) =>{
         else {
 
             averaged_query = calculate_average(result);
-            res.json({data:averaged_query})
+            res.json({data:[averaged_query]})
             
         }
     });
@@ -139,9 +139,14 @@ app.get('/power/daily',(req, res) =>{
 
 app.get('/energy/today',(req, res) =>{
     //iz serverja vedno izberem nazadnje vpisan podatek
-    now = new Date().toISOString();
 
-    let startOfDayEpoch = new Date().setUTCHours(0,0,0,0)
+    //convert to GMT+1
+    let t = new Date();
+    t = t.setHours(t.getHours() + 1);
+
+    now = new Date(t).toISOString()
+
+    let startOfDayEpoch = new Date(t).setUTCHours(0,0,0,0)
     startOfDay = new Date(startOfDayEpoch).toISOString()
 
     conPower.query("SELECT `Phase_1_Apparent_Power`,`Phase_2_Apparent_Power`,`Phase_3_Apparent_Power` FROM meritve WHERE `time` BETWEEN '"+startOfDay+"' AND '"+now+"'", function (err, result) {
@@ -151,7 +156,8 @@ app.get('/energy/today',(req, res) =>{
         else {
 
             let [energy,price,health] = calculateEnergy(result,startOfDayEpoch,now);
-            let calculatedResults = {data:{energy:energy, price:price, health:health}}
+            let id = Math.round(Math.random()*10000)
+            let calculatedResults = {data:[{id:id, energy:energy, price:price, health:health}]}
             console.log(calculatedResults)
             res.send(calculatedResults)
 
@@ -189,7 +195,8 @@ app.get('/energy/month/:n',(req, res) =>{
         else {
 
             let [energy,price,health] = calculateEnergy(result,startOfMonthEpoch,untill);
-            let calculatedResults = {data:{energy:energy, price:price, health:health}}
+            let id = Math.round(Math.random()*10000)
+            let calculatedResults = {data:[{id:id, energy:energy, price:price, health:health}]}
             console.log(calculatedResults)
             res.send(calculatedResults)
         }
@@ -321,20 +328,20 @@ function calculate_average(result){
     now = new Date().toISOString();
     avgAll = {}
     //get keys
-    vals = result[0]
-    for (var key in vals) {
-        if (vals.hasOwnProperty(key)) {
+    labels = result[0]
+    for (var label in labels) {
+        if (labels.hasOwnProperty(label)) {
             
             //use keys to fetch data
             let count = 0
             let sum = 0
             for(var element of result){
-                sum += Math.abs(element[key])
+                sum += Math.abs(element[label])
                 count +=1
             }
             avg = sum/count
             avg = Math.round(avg*100)/100
-            avgAll[key] = avg
+            avgAll[label] = avg
 
             }
         }
@@ -343,19 +350,21 @@ function calculate_average(result){
 }
 
 function calculateEnergy(result,start,stop){
+    
     energy = {}
-    vals = result[0]
+    labels = result[0]
     samples = result.length
-    for (var key in vals) {
+
+    for (var label in labels ) {
         
         let sum = 0
     
         for(var element of result){
-            sum += (Math.abs(element[key]))/600
+            sum += (Math.abs(element[label]))/600
         }
         
         sum = Math.round(sum*100)/100
-        energy[key] = sum
+        energy[label] = sum
 
     }
         
@@ -364,8 +373,8 @@ function calculateEnergy(result,start,stop){
     price = 0.11*energySum //eur
     price = Math.round(price*100)/100   
 
-    samples_all = 10*((new Date(stop).getTime() - start)/(1000*60))
+    samples_all = 10*((new Date(stop).getTime() - start)/(1000*60)+1)
     health = Math.round(100*samples/samples_all)/100
 
-    return [energySum, price, health]
+    return [energySum, price, 100*health]
 }
