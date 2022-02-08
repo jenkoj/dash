@@ -1,16 +1,11 @@
-
 import styles  from './login.module.css';
-import React, { useState, render } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import {Container, Row, Col,Form,Button,Alert,Modal,InputGroup} from 'react-bootstrap';
+import {Container, Row , Form, Button} from 'react-bootstrap';
 
 import Register from "./utils/modals/registration/register"
 
-//import 'bootstrap/dist/css/bootstrap.min.css';
-
-
 import creds from "../creds/pass.json";
-
 import { sha256 } from 'js-sha256';
 
 async function loginUser(credentials) {
@@ -34,18 +29,20 @@ export default function Login({setToken}) {
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-
   const handleSubmit = async e => {
-    alert("submit")
+    
     e.preventDefault();
+    
+    if (!password_tmp  || !username ){
+      alert("no input!")
+      return 0
+    }
 
     let password = sha256.hmac(creds.hmac.key,password_tmp);
     const token = await loginUser({
       username,
       password
     });
-    console.log(token.token)
 
     if (token.token == "True"){
         setToken(token)
@@ -53,18 +50,15 @@ export default function Login({setToken}) {
     else if(token.token == "False"){
         let msg= "Incorrect username or password! " + (token.retries) + " retries left"
         alert(msg)
-        
     }
     else{
         alert("Server error, can't connect")
     }
   }
 
-
   return(
     
     <Container  className={styles.loginWrapper}>
-
         <Container className={styles.loginBlock}>
             
             <Row> 
@@ -84,19 +78,11 @@ export default function Login({setToken}) {
                     <Button  className={styles.button} color="dark" variant="secondary" type="submit">
                         Login
                     </Button>
-
-                   
+                 
                 </Form>
                 <Button onClick={handleShow} className={styles.button} color="dark" variant="secondary">
                         Request access
                 </Button>
-
-                <Form.Check
-                  label="Keep me signed in"
-                  name="group1"
-                  type="checkbox"
-                  className={styles.checkBox}
-                />
                     
             </Container>
            
@@ -111,5 +97,5 @@ export default function Login({setToken}) {
 }
 
 Login.propTypes = {
-    setToken: PropTypes.func.isRequired
+    setToken: PropTypes.func.isRequired,
   }

@@ -1,7 +1,5 @@
 //TODO 
 //clean up inputs in register and login! 
-//singout button in navbar
-//stay signed in checkbox in login page 
 // edi
 
 //vključim knjižnice
@@ -20,21 +18,20 @@ import Weather from "./components/weather"
 import NavigationBar from "./components/utils/navbars/navigationBar"
 
 
-import useToken from './components/utils/useToken';
-
+import useToken from './components/utils/handleTokens/useToken';
 
 function App() {
-  //const [token, setToken] = useState()
+
 
   const { token, setToken } = useToken();
-
+  
   if(token == undefined || token == "undefined" ) {
-    return <Login setToken={setToken} />
+    return <Login setToken={setToken}/>
   }
 
   return (
     <div className="wrapper">
-      <NavigationBar setToken={setToken}/>
+      <NavigationBar setToken={setToken} />
       <Route exact path="/" component={Home} />
       <Route exact path="/power" component={Rezka}/>
       <Route exact path="/weather" component={Weather}/>

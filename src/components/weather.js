@@ -1,10 +1,7 @@
-//vključim knjižnice in zopet
 import React, { Component } from 'react'
 import InfoBlock from "./utils/infoblocks/InfoBlock"
 import SpinnerBlock from "./utils/infoblocks/SpinnerBlock"
 
-
-//uvozim css modul zaradi pisave  
 import styles from "./utils/infoblocks/InfoBlock.module.css"
 import {Container, Row, Col} from 'react-bootstrap';
 
@@ -12,7 +9,6 @@ import creds from "../creds/pass.json";
 
 
 class weather extends Component {
-    //definrial sem spremelnjivko
     state = { 
         napoved: [],
         loading_napoved: true,
@@ -95,7 +91,7 @@ class weather extends Component {
             </Container>
             <Container fluid centre>
                 <h1 className={styles.title}>Graphs</h1>
-                <h1 className={styles.subtitle}>For past three days</h1>
+                <h1 className={styles.subtitle}>For past seven days</h1>
                 
                 {/* load graphs after last row loads */}
                 { loading_napovedPastWeek ?   <div></div> :
@@ -103,24 +99,22 @@ class weather extends Component {
                         <Row noGutters="true">
                             
                             <div className={styles.graph}>
-                                <iframe src={`http://10.10.40.140:3000/d-solo/nFiaDURgz/weather?orgId=1&from=${Date.now()-3*24*60*60*1000}&to=${Date.now()}&theme=light&panelId=2`}  width={this.state.graphWidth} height={this.state.graphHeight} frameborder="0"></iframe>
+                                <iframe src={`http://10.10.40.140:3000/d-solo/nFiaDURgz/weather?orgId=1&from=${Date.now()-7*24*60*60*1000}&to=${Date.now()}&theme=light&panelId=2`}  width={this.state.graphWidth} height={this.state.graphHeight} frameborder="0"></iframe>
                             </div>
                         </Row>
                         <Row noGutters="true">
                             <div className={styles.graph}>
-                                <iframe src={`http://10.10.40.140:3000/d-solo/nFiaDURgz/weather?orgId=1&from=${Date.now()-3*24*60*60*1000}&to=${Date.now()}&theme=light&panelId=8`}  width={this.state.graphWidth} height={this.state.graphHeight} frameborder="0"></iframe>
+                                <iframe src={`http://10.10.40.140:3000/d-solo/nFiaDURgz/weather?orgId=1&from=${Date.now()-7*24*60*60*1000}&to=${Date.now()}&theme=light&panelId=8`}  width={this.state.graphWidth} height={this.state.graphHeight} frameborder="0"></iframe>
                             </div>
                         </Row>
                         <Row noGutters="true">
-                            {/* <h1 className={styles.subtitle}>Moč</h1> */}
                             <div className={styles.graph}>
-                                <iframe src={`http://10.10.40.140:3000/d-solo/nFiaDURgz/weather?orgId=1&from=${Date.now()-3*24*60*60*1000}&to=${Date.now()}&theme=light&panelId=4`}  width={this.state.graphWidth} height={this.state.graphHeight} frameborder="0"></iframe>
+                                <iframe src={`http://10.10.40.140:3000/d-solo/nFiaDURgz/weather?orgId=1&from=${Date.now()-7*24*60*60*1000}&to=${Date.now()}&theme=light&panelId=4`}  width={this.state.graphWidth} height={this.state.graphHeight} frameborder="0"></iframe>
                             </div>
                         </Row>
                         <Row noGutters="true">
-                            {/* <h1 className={styles.subtitle}>Moč</h1> */}
                             <div className={styles.graph}>
-                                <iframe src={`http://10.10.40.140:3000/d-solo/nFiaDURgz/weather?orgId=1&from=${Date.now()-3*24*60*60*1000}&to=${Date.now()}&theme=light&panelId=6`}  width={this.state.graphWidth} height={this.state.graphHeight} frameborder="0"></iframe>
+                                <iframe src={`http://10.10.40.140:3000/d-solo/nFiaDURgz/weather?orgId=1&from=${Date.now()-7*24*60*60*1000}&to=${Date.now()}&theme=light&panelId=6`}  width={this.state.graphWidth} height={this.state.graphHeight} frameborder="0"></iframe>
                             </div>
                         </Row>
                     </Container>

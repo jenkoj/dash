@@ -6,10 +6,6 @@ import "./register.css";
 
 import creds from "../../../../creds/pass.json";
 import { sha256 } from 'js-sha256';
-import { useRouteMatch } from 'react-router-dom';
-import { Alert } from 'react-bootstrap';
-
-
 
 
 export default function RegisterForm() {
@@ -39,33 +35,26 @@ export default function RegisterForm() {
       .then("Request sent!")
       .catch(err=>console.log(err))
     }
-  
-  
-    const handleSubmit2 = async event => {
     
+
+    const handleClick = async event => {
+      setValidated(true)
+    }
+
+    const handleSubmit = async event => {
+      
+      event.preventDefault();
       const form = event.currentTarget;
       
-      if (form.checkValidity() === false) {
-        
-        event.preventDefault();
-        event.stopPropagation();
-
-      }else{
-        // const resp = await handlePost();
-        // setUsrData({username,password,email,firstName,lastName,age})
-        // let password2 = sha256.hmac(creds.hmac.key,password_tmp);
-        // const res = await registerUser({username,password2,email,firstName,lastName,age}) 
-          
-      }
-      setValidated(true)
       let password = sha256.hmac(creds.hmac.key,password_tmp);
       const res = await registerUser({username,password,email,firstName,lastName,age})
-      
+      alert("Request sent!")
+
     }
   
   
     return (
-      <Form  noValidate validated={validated} onSubmit={handleSubmit2}>
+      <Form  noValidated validated={validated} onSubmit={handleSubmit}>
         <Row className="mb-3">
           <Form.Group  as={Col} md="4" controlId="validationCustom01">
             <Form.Control
@@ -148,7 +137,7 @@ export default function RegisterForm() {
           </Form.Group>
         </Row>
         
-        <Button className="button" color="dark" variant="secondary"  onClick={handleSubmit2} >Request access</Button>
+        <Button className="button" color="dark" variant="secondary" type="submit" onClick={handleClick} >Request access</Button>
       </Form>
     );
   }
