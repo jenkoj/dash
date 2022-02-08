@@ -20,9 +20,9 @@ class LightSwitch extends Component {
     getState() {
         
         fetch("http://"+creds.ip.api+"/esp/"+this.props.ip+"/state/"+creds.esp.key)
-        .then(response => response.json())
-        .then(response => {
-            var response = (response.state === 'true');
+        .then(res => res.json())
+        .then(resp => {
+            var response = (resp.state === 'true');
             this.setState({switchState : response})
         })
         .catch(err => console.log(err));

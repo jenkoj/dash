@@ -69,11 +69,11 @@ export default function Login({setToken}) {
     });
 
     //handle POST response 
-    if (token.token == "True"){
+    if (token.token === "True"){
         setToken(token)
     }
-    else if(token.token == "False"){
-        let msg= "Incorrect username or password! " + (token.retries) + " retries left"
+    else if(token.token === "False"){
+        let msg = "Incorrect username or password! " + (token.retries) + " retries left"
         alert(msg)
     }
     else{

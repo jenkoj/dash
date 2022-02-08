@@ -55,10 +55,9 @@ export default function RegisterForm() {
     const handleSubmit = async event => {
       
       event.preventDefault();
-      const form = event.currentTarget;
       
       let password = sha256.hmac(creds.hmac.key,password_tmp);
-      const res = await registerUser({username,password,email,firstName,lastName,age})
+      await registerUser({username,password,email,firstName,lastName,age})
       alert("Request sent!")
 
     }

@@ -95,22 +95,22 @@ class weather extends Component {
                         <Row noGutters="true">
                             
                             <div className={styles.graph}>
-                                <iframe src={`http://10.10.40.140:3000/d-solo/nFiaDURgz/weather?orgId=1&from=${Date.now()-7*24*60*60*1000}&to=${Date.now()}&theme=light&panelId=2`}  width={this.state.graphWidth} height={this.state.graphHeight} frameborder="0"></iframe>
+                                <iframe title="Temperature" src={`http://10.10.40.140:3000/d-solo/nFiaDURgz/weather?orgId=1&from=${Date.now()-7*24*60*60*1000}&to=${Date.now()}&theme=light&panelId=2`}  width={this.state.graphWidth} height={this.state.graphHeight} frameborder="0"></iframe>
                             </div>
                         </Row>
                         <Row noGutters="true">
                             <div className={styles.graph}>
-                                <iframe src={`http://10.10.40.140:3000/d-solo/nFiaDURgz/weather?orgId=1&from=${Date.now()-7*24*60*60*1000}&to=${Date.now()}&theme=light&panelId=8`}  width={this.state.graphWidth} height={this.state.graphHeight} frameborder="0"></iframe>
+                                <iframe title="Pressure" src={`http://10.10.40.140:3000/d-solo/nFiaDURgz/weather?orgId=1&from=${Date.now()-7*24*60*60*1000}&to=${Date.now()}&theme=light&panelId=8`}  width={this.state.graphWidth} height={this.state.graphHeight} frameborder="0"></iframe>
                             </div>
                         </Row>
                         <Row noGutters="true">
                             <div className={styles.graph}>
-                                <iframe src={`http://10.10.40.140:3000/d-solo/nFiaDURgz/weather?orgId=1&from=${Date.now()-7*24*60*60*1000}&to=${Date.now()}&theme=light&panelId=4`}  width={this.state.graphWidth} height={this.state.graphHeight} frameborder="0"></iframe>
+                                <iframe title="Humidity"  src={`http://10.10.40.140:3000/d-solo/nFiaDURgz/weather?orgId=1&from=${Date.now()-7*24*60*60*1000}&to=${Date.now()}&theme=light&panelId=4`}  width={this.state.graphWidth} height={this.state.graphHeight} frameborder="0"></iframe>
                             </div>
                         </Row>
                         <Row noGutters="true">
                             <div className={styles.graph}>
-                                <iframe src={`http://10.10.40.140:3000/d-solo/nFiaDURgz/weather?orgId=1&from=${Date.now()-7*24*60*60*1000}&to=${Date.now()}&theme=light&panelId=6`}  width={this.state.graphWidth} height={this.state.graphHeight} frameborder="0"></iframe>
+                                <iframe title="Cloudy"src={`http://10.10.40.140:3000/d-solo/nFiaDURgz/weather?orgId=1&from=${Date.now()-7*24*60*60*1000}&to=${Date.now()}&theme=light&panelId=6`}  width={this.state.graphWidth} height={this.state.graphHeight} frameborder="0"></iframe>
                             </div>
                         </Row>
                     </Container>

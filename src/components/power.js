@@ -32,7 +32,7 @@ class power extends Component {
         graphHeight:"400",
         graphWidth: "100%",
         secsMonth: 2592000000,
-        secsTillNow: 0
+        secsTillNow: new Date().getTime() 
      }
      
     componentDidMount(){
@@ -44,8 +44,8 @@ class power extends Component {
         this.getRequest("/energy/month/0", "energyThisMonth", "loading_energyThisMonth");
         this.getRequest("/energy/month/1", "energy1Month", "loading_energy1Month");
         this.getRequest("/energy/month/2", "energy2Months", "loading_energy2Months");
-        this.getRequest("/energy/month/3", "energy3Months", "loading_energy3Months");        
-        this.state.secsTillNow = new Date().getTime()
+        this.getRequest("/energy/month/3", "energy3Months", "loading_energy3Months");
+        
     }
     
     //define parametric get request
@@ -95,7 +95,8 @@ class power extends Component {
             energy2Months, loading_energy2Months,
             energy3Months, loading_energy3Months,
             secsMonth, secsTillNow
-              } = this.state;
+        } = this.state;
+
         return (  
         <div>
             <Container fluid>
@@ -140,22 +141,22 @@ class power extends Component {
                         <Container fluid centre>
                         <Row noGutters="true">
                             <div className={styles.graph}>
-                                <iframe src={`http://10.10.40.140:3000/d-solo/lMhMrEzgz/poraba-potoce?orgId=1&from=${Date.now()-3*60*60*1000}&to=${Date.now()}&theme=light&panelId=12"`} width={this.state.graphWidth} height={this.state.graphHeight}  frameBorder="0"/>
+                                <iframe title="Voltage" src={`http://10.10.40.140:3000/d-solo/lMhMrEzgz/poraba-potoce?orgId=1&from=${Date.now()-3*60*60*1000}&to=${Date.now()}&theme=light&panelId=12"`} width={this.state.graphWidth} height={this.state.graphHeight}  frameBorder="0"/>
                             </div>
                         </Row>
                         <Row noGutters="true">
                             <div className={styles.graph}>
-                                <iframe src={`http://10.10.40.140:3000/d-solo/lMhMrEzgz/poraba-potoce?orgId=1&from=${Date.now()-3*60*60*1000}&to=${Date.now()}&theme=light&panelId=2"`} width={this.state.graphWidth} height={this.state.graphHeight}  frameBorder="0"/>
+                                <iframe title="Current" src={`http://10.10.40.140:3000/d-solo/lMhMrEzgz/poraba-potoce?orgId=1&from=${Date.now()-3*60*60*1000}&to=${Date.now()}&theme=light&panelId=2"`} width={this.state.graphWidth} height={this.state.graphHeight}  frameBorder="0"/>
                             </div>
                         </Row>
                         <Row noGutters="true">
                             <div className={styles.graph}>
-                                <iframe src={`http://10.10.40.140:3000/d-solo/lMhMrEzgz/poraba-potoce?orgId=1&from=${Date.now()-3*60*60*1000}&to=${Date.now()}&theme=light&panelId=4"`} width={this.state.graphWidth} height={this.state.graphHeight}  frameBorder="0"/>
+                                <iframe title="Power" src={`http://10.10.40.140:3000/d-solo/lMhMrEzgz/poraba-potoce?orgId=1&from=${Date.now()-3*60*60*1000}&to=${Date.now()}&theme=light&panelId=4"`} width={this.state.graphWidth} height={this.state.graphHeight}  frameBorder="0"/>
                             </div>
                         </Row>
                         <Row noGutters="true">
                             <div className={styles.graph}>
-                                <iframe src={`http://10.10.40.140:3000/d-solo/lMhMrEzgz/poraba-potoce?orgId=1&from=${Date.now()-3*60*60*1000}&to=${Date.now()}&theme=light&panelId=10"`} width={this.state.graphWidth} height={this.state.graphHeight}  frameBorder="0"/>
+                                <iframe title="Frequency" src={`http://10.10.40.140:3000/d-solo/lMhMrEzgz/poraba-potoce?orgId=1&from=${Date.now()-3*60*60*1000}&to=${Date.now()}&theme=light&panelId=10"`} width={this.state.graphWidth} height={this.state.graphHeight}  frameBorder="0"/>
                             </div>
                         </Row>
                     </Container> }

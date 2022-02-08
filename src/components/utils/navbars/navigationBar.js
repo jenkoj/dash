@@ -1,6 +1,6 @@
 import React from 'react';
 import "./navigationBar.css"
-import {Navbar, Nav,Button,From} from 'react-bootstrap';
+import {Navbar, Nav} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
 //links enables switching pages with no reloading 

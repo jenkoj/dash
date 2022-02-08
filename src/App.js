@@ -14,7 +14,7 @@ function App() {
 
   const { token, setToken } = useToken();
   
-  if(token == undefined || token == "undefined" ) {
+  if(token === undefined || token === "undefined" ) {
     return <Login setToken={setToken}/>
   }
 

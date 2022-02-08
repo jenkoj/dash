@@ -22,14 +22,14 @@ export default function InfoBlock(props) {
 
     //set metadata 
     useEffect(() => {
-        if (props.type == "weather"){
+        if (props.type === "weather"){
         
             setAddHeading("Unit")
             setAddInfo1("Value")
 
         }
 
-        if (props.type == "power"){
+        if (props.type === "power"){
 
             setAddHeading("Unit")
             setAddInfo1("Value phase 2")
@@ -38,7 +38,7 @@ export default function InfoBlock(props) {
 
         }
 
-        if (props.type == "energy"){
+        if (props.type === "energy"){
 
             setAddHeading("Time period")
             setAddInfo3("Energy")
@@ -46,7 +46,7 @@ export default function InfoBlock(props) {
             setAddInfo2("Data health")
             
         }
-    });
+    },[props.type]);
 
     return (
         <div onClick={() => setShow(show => !show)} className={styles.block}>
