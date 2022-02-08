@@ -2,9 +2,14 @@ import React from 'react';
 import {Button,Modal} from 'react-bootstrap';
 
 import "./register.css";
-//import "bootstrap/dist/css/bootstrap.min.css";
 import RegisterForm from './registerForm';
 
+/**
+ * 
+ * @param {*} props... - style settings 
+ * @param {*} props.onHide - close modal  
+ * @returns Modal with registration form 
+ */
 
 export default function Register(props) {
 

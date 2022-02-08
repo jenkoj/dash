@@ -1,5 +1,11 @@
 import { useState } from 'react';
 
+/**
+ * Class handles token. It stores new one into local storage and
+ * reads the saved one when reloading page 
+ * @returns saveToken and token
+ */
+
 export default function useToken() {
     const getToken = () => {
       const tokenString = localStorage.getItem('token');

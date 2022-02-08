@@ -1,15 +1,15 @@
-//vključim knjižnize
 import React from 'react';
-//vključim lightswitch komponento
-import LightSwitch from "./utils/buttons/LightSwitch";
-import LightSwitchDummy from "./utils/buttons/LightSwitchDummy";
+import LightSwitch from "./utils/buttons/LightSwitch"; // uses real API calls
+import LightSwitchDummy from "./utils/buttons/LightSwitchDummy";// just visuals 
 
 import styles from "./utils/infoblocks/InfoBlock.module.css";
-//dodam boostrap knjižnico
 import {Container, Row, Col} from 'react-bootstrap';
 
-//uporabil sem bootstrap knjiznico za katera mi omogoča fluid container, trej da je spletna stran dinamična
-//tako deluje tako na mobilnih napravah kot tudi namiznih
+/**
+ * 
+ * @returns page with switches 
+ */
+
 export default function Home() {
     return (
         <div>

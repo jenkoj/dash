@@ -5,8 +5,13 @@ import SpinnerBlock from "./utils/infoblocks/SpinnerBlock"
 import styles from "./utils/infoblocks/InfoBlock.module.css"
 import {Container, Row, Col} from 'react-bootstrap';
 
+//read api ip from file 
 import creds from "../creds/pass.json";
 
+/**
+ * 
+ * @Returns Page with rendered infoblocks containing weather data 
+*/
 
 class weather extends Component {
     state = { 
@@ -18,62 +23,53 @@ class weather extends Component {
         graphWidth: "100%"
      }
 
-    //počakam da se class mounta in potem naredim api request
-    //to je good practice, takemu eventu/funkciji se reče lifecycle hook
+     // good practice lifecycle hook - request after component mounts
      componentDidMount(){
          this.getNapoved();
          this.getNapovedPastWeek();
      }
 
-    // definiram request na backend
+    // define backend requests for current state 
     getNapoved = () => {
-        //fetch API klic vrne promise
+        
         fetch("http://"+creds.ip.api+"/weather")
-        //podatke dobim v json zato moram programu povedati da naj jih jemlje kot json
         .then(response => response.json())
-        //vpišem response (promise) v state spremenljivko (react ne updtejta strani ob spremebi kot angular in moraš ročno pognati setstate)
         .then(response => this.setState({ 
             loading_napoved: false,
             napoved: response.data
         }))
-        //v primeru napake returnam error -> error bo javil če bo problem z fetchom samim
         .catch(err => console.error(err))
     }
 
-    //definiram metode oziroma funkcije
-    //Ker je <div> jsx expression ga lahko uporabljam kot stringe in integerje
-    //spodnje ukaze bi lahko izvedel kar v vrstici vendar je tako mogoče bolj pregledno
-    renderTemp = ({ id, temp}) => <div key={id+1}>{temp+" °C"}</div>            // {napoved.map(this.renderTemp)}
-    renderPritisk = ({ id, tlak}) => <div key={id+2}>{tlak+" hPa"}</div>         // {napoved.map(this.renderPritisk)}
-    renderVlaga = ({ id, vlaznost}) => <div key={id+3}>{vlaznost+" %"}</div>   // {napoved.map(this.renderVlaga)}
-    renderOblac = ({ id, oblacnost}) => <div key={id+4}>{oblacnost+" %"}</div> // {napoved.map(this.renderOblac)}
-
+    // define backend request for one week average k
     getNapovedPastWeek = () => {
-        //fetch API klic vrne promise
+
         fetch("http://"+creds.ip.api+"/weather/past/week")
-        //podatke dobim v json zato moram programu povedati da naj jih jemlje kot json
         .then(response => response.json())
-        //vpišem response (promise) v state spremenljivko (react ne updtejta strani ob spremebi kot angular in moraš ročno pognati setstate)
         .then(response => this.setState({ 
             loading_napovedPastWeek: false,
             napovedPastWeek: response.data
         }))
-        //v primeru napake returnam error -> error bo javil če bo problem z fetchom samim
         .catch(err => console.error(err))
     }
 
+    // define methods 
+    renderTemp = ({ id, temp}) => <div key={id+1}>{temp+" °C"}</div>           
+    renderPritisk = ({ id, tlak}) => <div key={id+2}>{tlak+" hPa"}</div>         
+    renderVlaga = ({ id, vlaznost}) => <div key={id+3}>{vlaznost+" %"}</div>   
+    renderOblac = ({ id, oblacnost}) => <div key={id+4}>{oblacnost+" %"}</div>
 
     render() { 
-        //naredim nov objekt napoved ki mu pripišem vrednost objekta state
-        //izraz za to je tudi object descructuring 
+        
+        //object destructuring makes it easier to use variables in tags 
         const {napoved,napovedPastWeek,loading_napoved,loading_napovedPastWeek} = this.state;
 
-        // const {napovedPastWeek} = this.state;
         return (  
         <div>
             <Container fluid>
                 <h1 className={styles.title}>Current state</h1>
                     <Row noGutters="true">
+                        {/* While fetcing display spinnerBlock when done display infoBlok with fetched data  */}
                         <Col xs >{ loading_napoved ? <SpinnerBlock/> : <InfoBlock heading="Temperature" info={napoved.map(this.renderTemp)} info15="C"info2="" info3="" type="weather"/>}</Col>
                         <Col xs >{ loading_napoved ? <SpinnerBlock/> : <InfoBlock heading="Pressure" info={napoved.map(this.renderPritisk)} info2="" info3="" type="weather"/> }</Col>
                         <Col xs >{ loading_napoved ? <SpinnerBlock/> : <InfoBlock heading="Humidity" info={napoved.map(this.renderVlaga)} info2="" info3="" type="weather"/>}</Col>

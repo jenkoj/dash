@@ -1,25 +1,32 @@
-import React,{useEffect, useState} from 'react';
-import {Row, Col,Form,Button,Modal,InputGroup} from 'react-bootstrap';
+import React,{useState} from 'react';
+import {Row, Col,Form,Button} from 'react-bootstrap';
+import { sha256 } from 'js-sha256';
 
 import "./register.css";
 
-
 import creds from "../../../../creds/pass.json";
-import { sha256 } from 'js-sha256';
 
-
+/**
+ * Registration form sends post request with all creditentials if user input is valid 
+ * @returns registration form 
+ */
 export default function RegisterForm() {
+
     const [validated, setValidated] = useState(false);
 
+    //parameters to send 
     const [username, setUserName] = useState();
     const [password_tmp, setPassword] = useState();
     const [email, setEmail] = useState();
     const [firstName, setFirstname] = useState();
     const [lastName, setLastname] = useState();
     const [age, setAge] = useState();
-
-    const [resp,setResp] = useState("init");  
     
+
+    /**
+     * Function handles POST request to backed with user input 
+     * @param {*} credentials set in the input
+     */
     async function registerUser(credentials) {
       
       fetch("http://"+creds.ip.api+"/register/", {
@@ -36,11 +43,15 @@ export default function RegisterForm() {
       .catch(err=>console.log(err))
     }
     
-
-    const handleClick = async event => {
+    //Turns on input validation 
+    const handleClick = () => {
       setValidated(true)
     }
 
+    /**
+     * Is triggered on submit, hashes passsword passes all user input to POST function
+     * @param {*} event 
+     */
     const handleSubmit = async event => {
       
       event.preventDefault();
@@ -73,7 +84,6 @@ export default function RegisterForm() {
               placeholder="Last name"
               className="input"
               onChange={e => setLastname(e.target.value)}
-
             />
             <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
           </Form.Group>

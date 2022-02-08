@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import styles from "./InfoBlock.module.css";
 import { BiInfoCircle } from 'react-icons/bi';
-import {View, Text} from 'react-bootstrap';
-//v spodnji funkciji prav tako uporabim passan objekt props iz katerega izvzamem naslov ter informacijo
-// stil oziroma pisavo vamem iz modula infoblock kot objekt
+
+/**
+ * 
+ * @param {*} props.type - needed for metadata  
+ * @param {*} props.heading - infoblock heading
+ * @param {*} props.info1 - main info
+ * @param {*} props.info2 - secondary info
+ * @param {*} props.info3 - last info 
+ * @returns an infomation block including passed data 
+ */
 
 export default function InfoBlock(props) {
     
@@ -13,7 +20,7 @@ export default function InfoBlock(props) {
     const [addInfo2,setAddInfo2] = useState(" ");
     const [addInfo3,setAddInfo3] = useState(" ");
 
-
+    //set metadata 
     useEffect(() => {
         if (props.type == "weather"){
         
@@ -28,6 +35,7 @@ export default function InfoBlock(props) {
             setAddInfo1("Value phase 2")
             setAddInfo2("Value phase 3")
             setAddInfo3("Value phase 1")
+
         }
 
         if (props.type == "energy"){
@@ -36,14 +44,13 @@ export default function InfoBlock(props) {
             setAddInfo3("Energy")
             setAddInfo1("Price")
             setAddInfo2("Data health")
+            
         }
     });
 
-
-
     return (
         <div onClick={() => setShow(show => !show)} className={styles.block}>
-           
+            {/* show metadata when user clicks info icon */}
             { show ? 
             <div>
                 <div>
@@ -82,12 +89,12 @@ export default function InfoBlock(props) {
                         {props.info2}
                         
                     </div> 
-                    
                 </div>
-               
+            
             </div>}
+
         <div className={styles.icon} >
-            <BiInfoCircle   ></BiInfoCircle>        
+            <BiInfoCircle></BiInfoCircle>        
         </div>
         </div>   
          

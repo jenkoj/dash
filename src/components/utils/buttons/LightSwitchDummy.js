@@ -1,30 +1,25 @@
 import React, { Component } from 'react'
-//importam css modul za stil
 import styles from "./LightSwitch.module.css"
 
-import creds from "../../../creds/pass.json";
+/**
+ *  Dummy switch that returns only structure and does not make real API requests 
+ *  @param  this.pros.ip - ip is used as ID 
+ *  @param  this.props.header - heading 
+ *  @returns boxy slider 
+ */
 
 class LightSwitchDummy extends Component {
-    
-    //definiram stikalo in zapišem def vrednost false
-    
+        
     state = { 
         isStikalo : false
      }
 
-    
-    //definiram onchage arrow funkcijo ki se pokliče ob klicu
-    //ker na drugi strani ni corsa server javi error ob klicu
-    //deluje zato ker fetch vedno uspe vedno pride na cilj razen če je dejanski network err
     onChangeStikalo = () => {
         console.log(this.state.isStikalo)
         this.setState(initState => ({isStikalo: !initState.isStikalo}));
-        // (this.state.isStikalo) ? this.offRequest(): this.onRequest()
     }
-
     
-
-    //tu sem naredil tipko, ki sprejema parametre ki jih passam ko kličem komponento (primer: this.props.header)
+    //this.props.ip are properties passed from parrent class 
     render() { 
         return ( 
             <div>

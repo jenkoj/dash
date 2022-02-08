@@ -1,15 +1,16 @@
-//vnesem vse knjižnice ter css datoteko
 import React from 'react';
 import "./navigationBar.css"
 import {Navbar, Nav,Button,From} from 'react-bootstrap';
 import PropTypes from 'prop-types';
 
-//link mi omogoča da se stran ne nalaga ob preklipu strani
+//links enables switching pages with no reloading 
 import {Link} from "react-router-dom"
 
-// import 'bootstrap/dist/css/bootstrap.min.css';
-
-// v spodnji funkciji uporabim boostrap knjižnico za navigacijski zavihek
+/**
+ * 
+ * @param {*} setToken - state parameter that sets token to undefined and thus logs out the user  
+ * @returns Nabvigation bar
+ */
 export default function navigationBar({setToken}) {
 
   const handleLogout = () => {

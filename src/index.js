@@ -1,12 +1,12 @@
-//vključim knjižnice
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import "bootstrap/dist/css/bootstrap.css"
 
-//browser router mi omogoča da imam 3 strani
+//enables multi-page website
 import {BrowserRouter} from "react-router-dom"
-//importam appikacijo (tam je vse napisano)
+
+//the meat of website
 import App from './App';
 
 //renderiram DOM 
