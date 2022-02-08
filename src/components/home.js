@@ -2,12 +2,12 @@ import React from 'react';
 import LightSwitch from "./utils/buttons/LightSwitch"; // uses real API calls
 import LightSwitchDummy from "./utils/buttons/LightSwitchDummy";// just visuals 
 
-import styles from "./utils/infoblocks/InfoBlock.module.css";
+import styles from "./home.module.css";
 import {Container, Row, Col} from 'react-bootstrap';
 
 /**
  * 
- * @returns page with switches 
+ * @returns Page with rendered swtiches 
  */
 
 export default function Home() {
