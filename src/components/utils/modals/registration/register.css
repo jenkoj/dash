@@ -1,0 +1,34 @@
+.my-modal .modal-content {
+    background-color: #cccccc;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.02), 0 6px 20px 0 rgba(0, 0, 0, 0.5);
+
+}
+
+.modal-backdrop {
+    background-color: rgb(255, 255, 255);
+  }
+
+.input{
+    border-radius: 10px;
+  }
+
+  .border-radiusImportant{
+    border-radius: 10px !important;
+  }
+
+.title{
+    font-weight: bold;
+    font-size: xxx-large;
+    text-align: left;
+    top: 10px;
+  }
+
+.button{
+    font-weight: bold;
+    font-size: medium;
+    border-radius: 10px;
+    margin: 5px;
+    /* backg“round-color: #444444; */
+  }

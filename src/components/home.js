@@ -12,19 +12,18 @@ export default function Home() {
     return (
         <div>
            <Container fluid>
-               <h1 className={styles.title}>Dnevna soba</h1>
+               <h1 className={styles.title}>Living Room</h1>
                 <Row>
-                    <Col xs><LightSwitch header="Omara" ip="10.10.10.104"/></Col>
-                    <Col xs><LightSwitch header="TV" ip="10.10.10.122"/></Col>
+                    <Col xs><LightSwitch header="Couch lamp" ip="10.10.10.104"/></Col>
+                    {/* <Col xs><LightSwitch header="Ceiling light" ip="10.10.10.122"/></Col> */}
                 </Row>
             </Container>
 
             <Container fluid>
-               <h1 className={styles.title}>Spalnica</h1>
+               <h1 className={styles.title}>Bed rooom</h1>
                 <Row>
-                    <Col xs><LightSwitch header="postelja" ip="10.10.10.121"/></Col>
-                    <Col xs><LightSwitch header="glavna luč" ip="10.10.10.129"/></Col>
-                    <Col xs><LightSwitch header="Lučke" ip="10.10.10.129"/></Col>
+                    <Col xs><LightSwitch header="Bed lamp" ip="10.10.10.121"/></Col>
+                    <Col xs><LightSwitch header="Ceiling lamp" ip="10.10.10.104"/></Col>
                 </Row>
             </Container>
         </div>

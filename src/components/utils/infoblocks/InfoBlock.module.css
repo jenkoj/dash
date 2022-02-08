@@ -4,8 +4,8 @@
     background-color: #ccc;
     display: block;
     
-    width: 90px;
-    height: 90px;
+    width: 100px;
+    height: 100px;
     padding: 10px;
     margin: 20px;
     border-radius: 14px;
@@ -21,6 +21,7 @@
     font-size: medium;
     /* border-style: solid; */
     text-align: left;
+    
   }
 
   .info{
@@ -39,7 +40,6 @@
     font-size: small;
     box-sizing: initial;
     opacity: 0.5;
-    /* border-style: solid; */
     top: 80px;
     left: 10px;
   }
@@ -50,11 +50,18 @@
     font-size: small;
     box-sizing: initial;
     opacity: 0.9;
-    /* border-style: solid; */
     top: 40px;
     left: 10px;
+
   }
 
+  .icon{
+    position: absolute;
+    font-size: small;
+    opacity: 0.9;
+    bottom: 10px;
+    right: 10px;
+  }
 
 
   .block:hover {
