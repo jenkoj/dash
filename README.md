@@ -2,8 +2,18 @@
 
 Dashboard enables user to oversee weather, power and switch status of the household. 
 
-architecture:
-![Screenshot 2022-02-09 at 16 40 43](https://user-images.githubusercontent.com/52485152/153236121-72dca6df-9225-411e-932a-c55ab98be4db.png)
+## Implemented functionalities
+
+* database for handling users
+* persitent local storage for tokens
+* API for handling ESP calls 
+* API for obtaining weather related data 
+* API for obtaining power and energy related
+
+## architecture:
+<p float="center">
+![Screenshot 2022-02-09 at 16 40 43](https://user-images.githubusercontent.com/52485152/153236121-72dca6df-9225-411e-932a-c55ab98be4db.png){:height="250" width="250"}
+</p>
 
 
 ## LOGIN PAGE 
