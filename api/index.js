@@ -8,6 +8,8 @@ const exec = require("child_process").exec;
 const { SIGPWR } = require("constants");
 
 try {  
+    //used for text on root page 
+    var root_txt = fs.readFileSync('root.txt', 'utf8');
     var data = fs.readFileSync('../src/creds/pass.json', 'utf8');
     data = JSON.parse(data)
    
@@ -68,6 +70,7 @@ conUsers.connect(err =>{
 
 
 //define all APIs 
+
 app.get('/weather',(req,res) =>{
     /*Get current weahter report */
     //select last enrty
@@ -80,6 +83,7 @@ app.get('/weather',(req,res) =>{
         }
     });
 });
+
 
 app.get('/weather/past/week',(req,res)=>{
     /* Get weather report for past 7 days*/
@@ -165,7 +169,7 @@ app.get('/energy/today',(req, res) =>{
 app.get('/energy/month/:n',(req, res) =>{
     /*Gets energy usage for n month back */
 
-    //gets date of firs day of n month back 
+    //gets date of first day of n month back 
     let date = new Date();
     let startOfMonth = new Date(date.getFullYear(), date.getMonth()-req.params.n, 0,25).toISOString()
     let startOfMonthEpoch = new Date(startOfMonth).getTime()
@@ -198,26 +202,30 @@ app.get('/energy/month/:n',(req, res) =>{
 app.get('/esp/:ip/state/:key',(req, res) =>{
     /* Get state of device:ip where roling :key has to match the one on server */
 
-    //check keys 
+    //check if security keys match 
     if (data.esp.key == req.params.key){
 
         let switchState;
-        ip = req.params.ip
+        ip = req.params.ip;
 
-        exec("curl " + ip, (error, stdout, stderr) => {
+        exec("curl " + ip, (error,stdout,stderr) => {
             try {
-            //parse html
-            let st = stdout.split('<!--#state-->')[1].split("</h1>")[0];
-            if (st == "on") switchState = "true";
-            else switchState = "false";
-            res.json({state:switchState})
+
+                //parse html
+                let st = stdout.split('<!--#state-->')[1].split("</h1>")[0];
+
+                if (st == "on") switchState = "true";
+                else switchState = "false";
+
+                res.json({state:switchState});
 
             } catch(typeError){
+
                 switchState = "false";
-                console.log("error while getting switch state")
+                console.log("error while getting switch state");
+
             }
         })  
-        
     }
     else{
         res.send("invalid api key")
@@ -256,17 +264,13 @@ app.get('/esp/:ip/set/:cmd/:key',(req, res) =>{
 
 // for parsing POST request
 const bodyParser = require("body-parser");
-const { time } = require("console");
-
-app.use(bodyParser.urlencoded({
-    extended: true
-}));
-
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 
 app.use('/login', (req, res) => { 
     /*checks if username and password are in database */
 
+    console.log("Trying to log in user:")
     console.log(req.body.username)
     console.log(req.body.password)
 
@@ -307,7 +311,7 @@ app.use('/login', (req, res) => {
     });
   });
 
-  app.use('/register/', (req, res) => { 
+  app.use('/register', (req, res) => { 
     /*  Post request pust user creditentials into database  */
 
     console.log("singing up user:")
@@ -318,13 +322,11 @@ app.use('/login', (req, res) => {
     console.log(req.body.lastName)
     console.log(req.body.age)
 
-
     conUsers.query("INSERT INTO `dash` (`Username`, `Password`, `Email`, `First name`, `Last name`, `Age`, `Status`) VALUES  (?,?,?,?,?,?,0)",[req.body.username,req.body.password,req.body.email,req.body.firstName,req.body.lastName,req.body.age], function (err, result) {
         if (err){
-
-                res.send({response:"error"})
+                res.send({response:"Error, please try again using new creditentials!"})
         }else{
-                res.send({response:"good"})
+                res.send({response:"Request recieved! please wait for adimn to confirm your creds!"})
         }          
     });
 });
@@ -332,16 +334,22 @@ app.use('/login', (req, res) => {
 
 //def route
 app.get('/',(req,res) =>{
-    res.send("Hi, this is dash API!<br/>Go to:<br/> /weather for weather report <br/> /power for current power usage <br/> /esp/ip/status for esp swithc status  <br/> /esp/ip/set/state to set esp switch to wanted state (on/off)");
+    
+    res.send(root_txt);
+    
 })
 
-
+/**
+ * 
+ * @param {*} result array contaning measuements 
+ * @returns average of input 
+ */
 function calculate_average(result){
 
     now = new Date().toISOString();
     avgAll = {}
     //get keys
-    labels = result[0]
+    var labels = result[0]
     for (var label in labels) {
         if (labels.hasOwnProperty(label)) {
             
@@ -362,6 +370,13 @@ function calculate_average(result){
     return avgAll
 }
 
+/**
+ * 
+ * @param {*} result array containing measuements 
+ * @param {*} start epoch time of first sample
+ * @param {*} stop epoch time of last sample 
+ * @returns {[energy in kwh, price in eur, % of data]}
+ */
 function calculateEnergy(result,start,stop){
     
     energy = {}
@@ -389,6 +404,7 @@ function calculateEnergy(result,start,stop){
     samples_all = 10*((new Date(stop).getTime() - start)/(1000*60))
     health = Math.round(100*samples/samples_all)/100
 
+    //change undefined to 0 
     energySum = energySum || 0
     price = price || 0
 

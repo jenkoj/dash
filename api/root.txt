@@ -1,0 +1,27 @@
+Hi, this is dash API! <br/>
+Go to:<br/> 
+<br/> 
+WEATHER<br/> 
+/weather for current weather report <br/>
+/weather/past/week/ for average weather past week <br/>
+<br/> 
+POWER<br/> 
+/power for current power usage <br/>
+/power/daily for average daily power use <br/> 
+<br/> 
+ENERGY<br/> 
+/energy/today for energy used today<br/>
+/energy/month/n for average energy used n months back (n=0 is current month)<br/>
+<br/> 
+ESP<br/> 
+/esp/ip/status for esp swithc status  <br/> 
+/esp/ip/set/state to set esp switch to wanted state (on/off)<br/>
+USER<br/> 
+/login json with username and password (10 retries per user) <br/> 
+/register json with name, surname, age, username, password and email <br/>
+
+
+
+
+
+
