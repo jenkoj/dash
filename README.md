@@ -59,6 +59,12 @@ Dashboard enables user to oversee weather, power and switch status of the househ
   <img src="https://user-images.githubusercontent.com/52485152/153295868-177ae4c0-4291-4f63-a383-9defede0acfd.jpg" width="250" />
   <img src="https://user-images.githubusercontent.com/52485152/153295979-87ad15bc-2f13-437f-ab02-642a7f8e77fd.jpg" width="250" />
   <img src="https://user-images.githubusercontent.com/52485152/153295885-a46c1360-3223-4072-aeb6-05cfa6784eef.jpg" width="250" />
+</p>
+<p float="center">
   <img src="https://user-images.githubusercontent.com/52485152/153295988-73589f03-d977-4769-b317-4ff1a9ccd53e.jpg" width="250" />
   <img src="https://user-images.githubusercontent.com/52485152/153296009-c6bbe828-e99f-4a17-8796-f40eca58d2dd.jpg" width="250" />
 </p>
+
+* Current and daily average power status 
+* Energy usage for today and past 4 months 
+* Graphs for past 3 days 
