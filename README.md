@@ -13,7 +13,7 @@ Dashboard enables user to oversee weather, power and switch status of the househ
 ## architecture:
 
 <p float="center">
-  <img src="https://user-images.githubusercontent.com/52485152/153236121-72dca6df-9225-411e-932a-c55ab98be4db.png" width="250" />
+  <img src="https://user-images.githubusercontent.com/52485152/153236121-72dca6df-9225-411e-932a-c55ab98be4db.png" width="500" />
 
 </p>
 
