@@ -6,7 +6,7 @@ Dashboard enables user to oversee weather, power and switch status of the househ
 
 * database for handling users
 * persitent local storage for tokens
-* Reload-less page switching 
+* reload-less page switching 
 * Grafana graphs 
 * API for handling ESP calls 
 * API for obtaining weather related data 
@@ -65,6 +65,6 @@ Dashboard enables user to oversee weather, power and switch status of the househ
   <img src="https://user-images.githubusercontent.com/52485152/153296009-c6bbe828-e99f-4a17-8796-f40eca58d2dd.jpg" width="250" />
 </p>
 
-* Current and daily average power status 
-* Energy usage for today and past 4 months 
-* Graphs for past 3 days 
+* Current and daily average power status.
+* Energy usage for today and past 4 months. 
+* Graphs for past 3 days.
