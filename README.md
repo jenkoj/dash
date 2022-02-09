@@ -8,10 +8,10 @@ architecture:
 
 ## LOGIN PAGE 
 
+![IMG_4005](https://user-images.githubusercontent.com/52485152/153239062-f4ea5707-7541-4453-967b-2160f618503f.jpg)
 
-![image](https://user-images.githubusercontent.com/52485152/153236931-0aef6f54-99e9-4265-8e21-840624e400f0.png)
 
 # REGISTRATION FORM 
-![image](https://user-images.githubusercontent.com/52485152/153237018-5a6ab892-6793-42c6-86f0-2a60631a88c0.png)
-![image](https://user-images.githubusercontent.com/52485152/153237038-65598d87-4dea-4d5f-b7df-32b698fe986b.png)
-![image](https://user-images.githubusercontent.com/52485152/153237051-af8dc302-bb7c-41ca-871a-983673808554.png)
+![IMG_4006](https://user-images.githubusercontent.com/52485152/153239075-c4cf887d-5166-4f8b-8123-7064764a0df1.jpg)
+![IMG_4007](https://user-images.githubusercontent.com/52485152/153239088-ee599b90-f70a-4c4e-9cd8-a20f2ce16495.jpg)
+![IMG_4008](https://user-images.githubusercontent.com/52485152/153239098-33b322aa-2d1c-4d87-b4d2-82a8332a9f0d.jpg)
