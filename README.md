@@ -11,10 +11,11 @@ Dashboard enables user to oversee weather, power and switch status of the househ
 * API for obtaining power and energy related
 
 ## architecture:
-<p float="center">
-![Screenshot 2022-02-09 at 16 40 43](https://user-images.githubusercontent.com/52485152/153236121-72dca6df-9225-411e-932a-c55ab98be4db.png){:height="250" width="250"}
-</p>
 
+<p float="center">
+  <img src="https://user-images.githubusercontent.com/52485152/153236121-72dca6df-9225-411e-932a-c55ab98be4db.png" width="250" />
+
+</p>
 
 ## LOGIN PAGE 
 
