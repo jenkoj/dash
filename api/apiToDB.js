@@ -22,10 +22,11 @@ const url = `http://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${ap
 
 let rawdata;
 
-//definiram funkcijo ki bo ob klicu zapisala podatke v podatkovno bazo
+/**
+ * Define function that will insert weahter data from openweatherAPI to my DB
+ */
 function writeToDB() {
 
-    //definriam potrebne konstante za povezavo in pisanje v mariadb podatkovno bazo
     let con = mysql.createConnection({
         host: "localhost",
         user: data.mysql.user,
@@ -33,17 +34,17 @@ function writeToDB() {
         database: "vreme"
       });
     
-    //pretvorim podatke iz kelvinov v stopinje celzija
+    // convert from kelvin to celsius
     let tempInCels = rawdata.main.temp - 273.15;
     tempInCels = Math.round(tempInCels,4);
     
-    // uporaim con objekt za povezavo na bazo in vanjo vpišem 4 podatke
+    // use con object to connect to DB and insert data 
     con.connect(function(err) {
         if (err) throw err;
         console.log("Connected!");
         var sql = "INSERT INTO napoved (time, temp, tlak, vlaznost, oblacnost) VALUES (CURRENT_TIMESTAMP,'"+tempInCels+"','"+rawdata.main.pressure+"','"+rawdata.main.humidity+"','"+rawdata.clouds.all+"')";
         
-        //pridobim informacijo od serverja (ack) da se je podatke vpisal
+        //wait for ack 
         con.query(sql, function (err) {
         if (err) throw err;
         console.log("1 record inserted");
@@ -52,6 +53,7 @@ function writeToDB() {
     });
 }
 
+//make a request to openweatherAPI and call function above to inert it into DB 
 request(url, function (err, response) {
     if(err){
       console.log('error:', error);
