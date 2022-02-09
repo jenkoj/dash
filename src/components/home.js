@@ -14,15 +14,15 @@ export default function Home() {
     return (
         <div>
            <Container fluid>
-               <h1 className={styles.title}>Living Room</h1>
+               <h1 className={styles.title}>Living room</h1>
                 <Row>
                     <Col xs><LightSwitch header="Couch Lamp" ip="10.10.10.104"/></Col>
-                    <Col xs><LightSwitchDummy header="Ceiling Light" /></Col>
+                    <Col xs><LightSwitchDummy header="TV Light" /></Col>
                 </Row>
             </Container>
 
             <Container fluid>
-               <h1 className={styles.title}>Bed rooom</h1>
+               <h1 className={styles.title}>Bed room</h1>
                 <Row>
                     <Col xs><LightSwitchDummy header="Bed Lamp" /></Col>
                     <Col xs><LightSwitchDummy header="Ceiling lamp" /></Col>
@@ -34,7 +34,7 @@ export default function Home() {
                <h1 className={styles.title}>Kitchen</h1>
                 <Row>
                     <Col xs><LightSwitchDummy header="Table Lamp" /></Col>
-                    <Col xs><LightSwitchDummy header="Cieling lamp" /></Col>
+                    <Col xs><LightSwitchDummy header="Main lamp" /></Col>
                 </Row>
             </Container>
             <Container fluid>

@@ -1,6 +1,6 @@
 {
   "name": "rezka",
-  "version": "2.1.0",
+  "version": "2.9.0",
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.15.1",
@@ -22,7 +22,8 @@
     "react-icons": "^4.3.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^4.0.3",
-    "request": "^2.88.2"
+    "request": "^2.88.2",
+    "glob-parent": ">=5.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
