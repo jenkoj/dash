@@ -6,7 +6,7 @@ Dashboard enables user to oversee weather, power and switch status of the househ
 
 * database for handling users
 * persitent local storage for tokens
-* No reload when switching between pages 
+* Reload-less page switching 
 * Grafana graphs 
 * API for handling ESP calls 
 * API for obtaining weather related data 
@@ -37,7 +37,7 @@ Dashboard enables user to oversee weather, power and switch status of the househ
 
 # Page With Virtual Switches 
 <p float="center">
-  <img src="(https://user-images.githubusercontent.com/52485152/153288690-08933b38-4a2e-4f03-9fa8-61db77a32d31.jpg)" width="250" />
+  <img src="https://user-images.githubusercontent.com/52485152/153288690-08933b38-4a2e-4f03-9fa8-61db77a32d31.jpg" width="250" />
 </p>
 
 * Syncs state of switch on reload.
