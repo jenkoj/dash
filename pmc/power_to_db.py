@@ -11,7 +11,7 @@ count = 0
 mydb = mysql.connector.connect(
   host=creds.ip,
   user=creds.user,
-  password=creds.pass",
+  password=creds.pass,
   database=creds.db
 )
 mycursor = mydb.cursor()
