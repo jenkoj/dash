@@ -9,10 +9,10 @@ import json
 count = 0
 
 mydb = mysql.connector.connect(
-  host="10.10.40.140",
-  user="jakob",
-  password="68941",
-  database="poraba"
+  host=creds.ip,
+  user=creds.user,
+  password=creds.pass",
+  database=creds.db
 )
 mycursor = mydb.cursor()
 sql = "INSERT INTO meritve (time, Phase_1_voltage_RMS, Phase_2_voltage_RMS, Phase_3_voltage_RMS, Phase_1_current_RMS, Phase_2_current_RMS, Phase_3_current_RMS , N_Line_calc_current_RMS, Phase_1_Active_Power, Phase_2_Active_Power,Phase_3_Active_Power,Phase_1_Apparent_Power,Phase_2_Apparent_Power,Phase_3_Apparent_Power ,Phase_1_frequency  ,Phase_1_PF , Phase_2_PF , Phase_3_PF) VALUES (CURRENT_TIMESTAMP,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
