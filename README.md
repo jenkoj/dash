@@ -67,4 +67,4 @@ Dashboard enables user to oversee weather, power and switch status of the househ
 
 * Current and daily average power status.
 * Energy usage for today and past 4 months. 
-* Graphs for past 3 days.
+* Graphs for the past 3 days.
